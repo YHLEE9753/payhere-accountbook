@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: payhere-accountbook
+  profiles:
+    active: prod
+    group:
+      prod: prod

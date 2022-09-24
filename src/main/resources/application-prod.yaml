@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
+    username: admin
+    password: 1234
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        show_sql: true
+        format_sql: true
+app:
+  jwt:
+    header: token
+    issuer: accountbook
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpiry: 3600000
+    refreshTokenExpiry: 172800000
