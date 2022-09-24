@@ -1,0 +1,35 @@
+name: accountbook-1.0.0
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Test scenario"
+        required: true
+        default: "Run Deployment"
+      home:
+        description: "User name"
+        required: true
+        default: "YHLEE9753"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_REPOSITORY }} .
+          docker push ${{ secrets.DOCKER_REPOSITORY }}
