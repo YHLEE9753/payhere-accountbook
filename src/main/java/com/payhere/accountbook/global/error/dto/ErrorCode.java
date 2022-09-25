@@ -20,8 +20,7 @@ public enum ErrorCode {
 	INVALID_PASSWORD("M005", "Password is not same", HttpStatus.BAD_REQUEST),
 	BlACK_TYPE_TOKEN_DETECTION("M006", "Black type token is detected", HttpStatus.BAD_REQUEST),
 	NOT_FOUND_MEMBER_BY_ACCESS_TOKEN("M007", "Not found member by access token", HttpStatus.BAD_REQUEST),
-
-
+	INVALID_EMAIL("M008", "Email is invalid", HttpStatus.BAD_REQUEST),
 
 	// Token Expiration
 	ACCESS_TOKEN_EXPIRATION("T001", "Access token is expired", HttpStatus.BAD_REQUEST),

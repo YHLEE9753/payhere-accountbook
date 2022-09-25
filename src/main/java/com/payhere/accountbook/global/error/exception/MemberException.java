@@ -38,6 +38,11 @@ public class MemberException extends BusinessException {
 		return new MemberException(ErrorCode.INVALID_PASSWORD, "비밀번호가 유효하지 않습니다.");
 	}
 
+	public static MemberException invalidPassword(String password) {
+		return new MemberException(ErrorCode.INVALID_PASSWORD,
+			MessageFormat.format("'숫자', '문자', '특수문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용 (password: {0})", password));
+	}
+
 	public static MemberException blackTypeTokenDetection() {
 		return new MemberException(ErrorCode.BlACK_TYPE_TOKEN_DETECTION, "로그아웃처리된 토큰으로 접속이 감지되었습니다");
 	}
@@ -45,6 +50,11 @@ public class MemberException extends BusinessException {
 	public static MemberException notFoundMemberByAccessToken(String accessToken) {
 		return new MemberException(ErrorCode.NOT_FOUND_MEMBER_BY_ACCESS_TOKEN,
 			MessageFormat.format("회원을 access token으로 찾을 수 없습니다. (token: {0})", accessToken));
+	}
+
+	public static MemberException invalidEmail(String email) {
+		return new MemberException(ErrorCode.INVALID_EMAIL,
+			MessageFormat.format("이메일이 유효하지 않습니다. (email: {0})", email));
 	}
 }
 

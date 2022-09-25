@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.payhere.accountbook.domain.member.util.MemberUtil;
 import com.payhere.accountbook.global.error.exception.MemberException;
 
 import lombok.AccessLevel;
@@ -25,13 +26,13 @@ public class Member {
 	@Column(name = "member_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 
-	@Column(name = "email", length = 40, unique = true, nullable = false)
+	@Column(name = "email", length = 320, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 40, nullable = false)
+	@Column(name = "password", length = 16, nullable = false)
 	private String password;
 
-	@Column(name = "nickname", length = 20, unique = true, nullable = false)
+	@Column(name = "nickname", length = 10, unique = true, nullable = false)
 	private String nickname;
 
 	@Enumerated(value = EnumType.STRING)
@@ -44,12 +45,13 @@ public class Member {
 	@Column(name = "access_token", length = 40, unique = true)
 	private String accessToken;
 
-	@Builder
-	public Member(String email, String password, String nickname, MemberRole memberRole) {
+	public Member(String email, String password, String nickname) {
+		MemberUtil.emailValidation(email);
+		MemberUtil.passwordValidation(password);
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
-		this.memberRole = memberRole;
+		this.memberRole = MemberRole.ROLE_MEMBER;
 	}
 
 	public void updateRefreshToken(String refreshToken){
