@@ -33,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
 	private final TokenService tokenService;
 	private final MemberRepository memberRepository;
 
@@ -71,9 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		} else if (!isLogout && accessToken != null) {
 			// 3. accessToken 만료, refreshToken 유효 -> refreshToken 을 검증하여 accessToken 재발급
 			Member member = memberRepository.findByAccessTokenValue(accessToken).orElseThrow(() -> {
-				throw new RuntimeException();
+				throw MemberException.notFoundMemberByAccessToken(accessToken);
 			});
 			String refreshTokenValue = member.getRefreshToken();
+
 			if (isRefreshTokenValid(refreshTokenValue)) {
 				String[] roles = tokenService.getRole(refreshTokenValue);
 				String accessTokenValue = tokenService.generateAccessToken(String.valueOf(member.getId()), roles);

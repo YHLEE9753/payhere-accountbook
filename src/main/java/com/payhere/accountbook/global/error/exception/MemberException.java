@@ -41,5 +41,10 @@ public class MemberException extends BusinessException {
 	public static MemberException blackTypeTokenDetection() {
 		return new MemberException(ErrorCode.BlACK_TYPE_TOKEN_DETECTION, "로그아웃처리된 토큰으로 접속이 감지되었습니다");
 	}
+
+	public static MemberException notFoundMemberByAccessToken(String accessToken) {
+		return new MemberException(ErrorCode.NOT_FOUND_MEMBER_BY_ACCESS_TOKEN,
+			MessageFormat.format("회원을 access token으로 찾을 수 없습니다. (token: {0})", accessToken));
+	}
 }
 

@@ -20,10 +20,6 @@ public class MemberConverter {
 	}
 
 	public static MemberResponse toMemberResponse(Member member) {
-		return MemberResponse.builder()
-			.id(member.getId())
-			.email(member.getEmail())
-			.nickName(member.getNickname())
-			.build();
+		return new MemberResponse(member.getId(), member.getEmail(), member.getNickname());
 	}
 }

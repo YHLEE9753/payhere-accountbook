@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-
 	private final TokenService tokenService;
 	private final MemberRepository memberRepository;
 

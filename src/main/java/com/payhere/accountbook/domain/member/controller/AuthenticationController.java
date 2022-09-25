@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.payhere.accountbook.domain.member.controller.dto.MemberIdRequest;
 import com.payhere.accountbook.domain.member.controller.dto.MemberLoginRequest;
 import com.payhere.accountbook.domain.member.controller.dto.MemberSignUpRequest;
 import com.payhere.accountbook.domain.member.model.MemberRole;

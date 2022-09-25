@@ -38,6 +38,7 @@ public class AuthenticationService {
 		return MemberConverter.toMemberResponse(member);
 	}
 
+	@Transactional
 	public void logout(Long memberId, String accessTokenWithBlackListType) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> {
 			throw MemberException.notFoundMemberById(memberId);

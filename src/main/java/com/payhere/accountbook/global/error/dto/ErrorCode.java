@@ -19,6 +19,7 @@ public enum ErrorCode {
 	NOT_FOUND_MEMBER_BY_EMAIL("M004", "Not found member by email", HttpStatus.BAD_REQUEST),
 	INVALID_PASSWORD("M005", "Password is not same", HttpStatus.BAD_REQUEST),
 	BlACK_TYPE_TOKEN_DETECTION("M006", "Black type token is detected", HttpStatus.BAD_REQUEST),
+	NOT_FOUND_MEMBER_BY_ACCESS_TOKEN("M007", "Not found member by access token", HttpStatus.BAD_REQUEST),
 
 
 
