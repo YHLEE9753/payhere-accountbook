@@ -43,7 +43,7 @@ class AuthenticationControllerTest extends ControllerTestConfig {
 	void postMemberSignup() throws Exception {
 		// given
 		MemberSignUpRequest memberSignUpRequest = new MemberSignUpRequest("test123@google.com", "whale123",
-			"qwer1234!@#$");
+			"qwer1234");
 		MemberResponse memberResponse = new MemberResponse(1L, "test123@google.com", "whale123");
 		String accessToken = "accessToken";
 		MemberSignupResponse memberSignupResponse = new MemberSignupResponse(memberResponse, accessToken);
@@ -90,7 +90,7 @@ class AuthenticationControllerTest extends ControllerTestConfig {
 	@DisplayName("/api/v1/login 에서 로그인을 한다")
 	void postLogin() throws Exception {
 		// given
-		MemberLoginRequest memberLoginRequest = new MemberLoginRequest("test123@google.com", "qwer1234!@#$");
+		MemberLoginRequest memberLoginRequest = new MemberLoginRequest("test123@google.com", "qwer1234");
 		MemberResponse memberResponse = new MemberResponse(1L, "test123@google.com", "whale123");
 		Tokens tokens = new Tokens("accessToken", "RefreshToken");
 		String accessToken = "accessToken";

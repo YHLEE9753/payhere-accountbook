@@ -12,7 +12,6 @@ import com.payhere.accountbook.domain.member.util.MemberUtil;
 import com.payhere.accountbook.global.error.exception.MemberException;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,10 +38,10 @@ public class Member {
 	@Column(name = "member_role", length = 16, nullable = false)
 	private MemberRole memberRole;
 
-	@Column(name = "refresh_token", length = 40, unique = true)
+	@Column(name = "refresh_token", length = 200, unique = true)
 	private String refreshToken;
 
-	@Column(name = "access_token", length = 40, unique = true)
+	@Column(name = "access_token", length = 200, unique = true)
 	private String accessToken;
 
 	public Member(String email, String password, String nickname) {

@@ -40,7 +40,7 @@ public class MemberException extends BusinessException {
 
 	public static MemberException invalidPassword(String password) {
 		return new MemberException(ErrorCode.INVALID_PASSWORD,
-			MessageFormat.format("'숫자', '문자', '특수문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용 (password: {0})", password));
+			MessageFormat.format("'숫자', '문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용 (password: {0})", password));
 	}
 
 	public static MemberException blackTypeTokenDetection() {
