@@ -5,4 +5,5 @@
 3. MySQL 포트 설정 : `3306`, Spring 포트 설정 : `8080` - 해당 포트를 사용중이라면 정지후 재실행한다.
 4. `http://localhost:8080` 에 접속한다.
 
-### 인증
+### 개발
+feat1 (220924-220925) : 공통 설정 추가(JPA Audit, Error 핸들링, Security), JWT 토큰 추가, AccessToken, RefreshToken 기반의 인증 filter 작성
