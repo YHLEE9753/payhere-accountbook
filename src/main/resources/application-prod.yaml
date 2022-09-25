@@ -13,11 +13,3 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         show_sql: true
         format_sql: true
-app:
-  jwt:
-    header: token
-    issuer: accountbook
-    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
-    tokenExpiry: 3600000
-    refreshTokenExpiry: 172800000
-  domain: "http://localhost:8080"

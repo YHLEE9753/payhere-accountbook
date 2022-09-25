@@ -1,0 +1,12 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:title: Account Book API
+:toc-title: Account Book API 목차
+:toc: left
+
+[[title]]
+= Account Book API v1
+
+include::member-authentication.adoc[]

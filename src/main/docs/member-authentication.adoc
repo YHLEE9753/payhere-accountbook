@@ -1,0 +1,16 @@
+== 멤버 인증
+
+=== 회원가입
+
+operation::post-member-signup[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 로그인
+
+operation::post-login[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 로그아웃
+
+operation::post-logout[snippets='http-request,http-response']
+'''

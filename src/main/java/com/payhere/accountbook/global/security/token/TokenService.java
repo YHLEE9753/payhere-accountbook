@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.payhere.accountbook.global.error.exception.MemberException;
 import com.payhere.accountbook.global.error.exception.TokenException;
 import com.payhere.accountbook.global.util.CoderUtil;
 
@@ -23,16 +22,13 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class TokenService {
-
 	private final String issuer;
 	private final long tokenPeriod;
 	private final long refreshPeriod;
-	private final long refreshTokenPeriod;
 	private final Key key;
 	private String role = "roles";
 
 	public TokenService(JwtProperties jwtProperties) {
-		this.refreshTokenPeriod = jwtProperties.getRefreshTokenExpiry();
 		this.issuer = jwtProperties.getIssuer();
 		this.tokenPeriod = jwtProperties.getTokenExpiry();
 		this.refreshPeriod = jwtProperties.getRefreshTokenExpiry();
@@ -140,7 +136,7 @@ public class TokenService {
 	}
 
 	public long getRefreshTokenPeriod() {
-		return refreshTokenPeriod;
+		return refreshPeriod;
 	}
 
 	public String tokenWithType(String accessToken, TokenType tokenType) {

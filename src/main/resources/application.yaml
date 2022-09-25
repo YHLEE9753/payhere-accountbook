@@ -4,4 +4,4 @@ spring:
   profiles:
     active: prod
     group:
-      prod: prod
+      prod: prod, common

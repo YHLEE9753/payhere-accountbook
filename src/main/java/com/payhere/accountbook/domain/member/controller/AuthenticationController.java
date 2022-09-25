@@ -14,6 +14,7 @@ import com.payhere.accountbook.domain.member.controller.dto.MemberLoginRequest;
 import com.payhere.accountbook.domain.member.controller.dto.MemberSignUpRequest;
 import com.payhere.accountbook.domain.member.model.MemberRole;
 import com.payhere.accountbook.domain.member.service.AuthenticationService;
+import com.payhere.accountbook.domain.member.service.dto.MemberLoginResponse;
 import com.payhere.accountbook.domain.member.service.dto.MemberResponse;
 import com.payhere.accountbook.domain.member.service.dto.MemberSignupResponse;
 import com.payhere.accountbook.global.security.token.TokenService;
@@ -47,19 +48,19 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<MemberSignupResponse> login(
+	public ResponseEntity<MemberLoginResponse> login(
 		@Valid @RequestBody MemberLoginRequest memberLoginRequest
 	) {
 		MemberResponse memberResponse = authenticationService.login(memberLoginRequest);
 		Tokens tokens = tokenService.generateTokens(memberResponse.id().toString(), MemberRole.ROLE_MEMBER.name());
 		authenticationService.saveTokens(memberResponse.id(), tokens);
 
-		MemberSignupResponse memberSignupResponse = new MemberSignupResponse(memberResponse,
+		MemberLoginResponse memberLoginResponse = new MemberLoginResponse(memberResponse,
 			CoderUtil.encode(tokens.accessToken()));
 
 		return ResponseEntity
 			.ok()
-			.body(memberSignupResponse);
+			.body(memberLoginResponse);
 	}
 
 	@PostMapping("/logout")
