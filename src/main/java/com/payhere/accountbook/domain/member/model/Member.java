@@ -2,11 +2,16 @@ package com.payhere.accountbook.domain.member.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.payhere.accountbook.global.error.exception.MemberException;
+
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,17 +28,42 @@ public class Member {
 	@Column(name = "email", length = 40, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 40, unique = true, nullable = false)
+	@Column(name = "password", length = 40, nullable = false)
 	private String password;
 
+	@Column(name = "nickname", length = 20, unique = true, nullable = false)
+	private String nickname;
 
-	@Column(name = "refresh_token_value", length = 40, unique = true)
-	private String refreshTokenValue;
+	@Enumerated(value = EnumType.STRING)
+	@Column(name = "member_role", length = 16, nullable = false)
+	private MemberRole memberRole;
 
-	@Column(name = "access_token_value", length = 40, unique = true)
-	private String accessTokenValue;
+	@Column(name = "refresh_token", length = 40, unique = true)
+	private String refreshToken;
 
-	public void updateRefreshToken(String refreshTokenValue){
-		this.refreshTokenValue = refreshTokenValue;
+	@Column(name = "access_token", length = 40, unique = true)
+	private String accessToken;
+
+	@Builder
+	public Member(String email, String password, String nickname, MemberRole memberRole) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.memberRole = memberRole;
+	}
+
+	public void updateRefreshToken(String refreshToken){
+		this.refreshToken = refreshToken;
+	}
+
+	public void updateTokens(String accessToken, String refreshToken){
+		this.accessToken = accessToken;
+		this.refreshToken = refreshToken;
+	}
+
+	public void checkPassword(String password) {
+		if(!this.password.equals(password)){
+			throw MemberException.invalidPassword();
+		}
 	}
 }

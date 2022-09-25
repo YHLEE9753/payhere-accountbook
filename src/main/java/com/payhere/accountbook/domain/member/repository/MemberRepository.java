@@ -9,4 +9,8 @@ import com.payhere.accountbook.domain.member.model.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByAccessTokenValue(String accessTokenValue);
+
+	Optional<Member> findByEmail(String email);
+
+	Optional<Member> findByNickname(String nickname);
 }

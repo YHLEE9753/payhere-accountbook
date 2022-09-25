@@ -13,7 +13,11 @@ public enum ErrorCode {
 	METHOD_NOT_ALLOWED("C003", "Http method not allowed", HttpStatus.METHOD_NOT_ALLOWED),
 
 	// Member
-	NOT_FOUND_MEMBER("M001", "Not found member", HttpStatus.BAD_REQUEST),
+	NOT_FOUND_MEMBER_BY_ID("M001", "Not found member by id", HttpStatus.BAD_REQUEST),
+	EMAIL_DUPLICATED_MEMBER("M002", "Already existed email member", HttpStatus.BAD_REQUEST),
+	NICKNAME_DUPLICATED_MEMBER("M003", "Already existed nickname member", HttpStatus.BAD_REQUEST),
+	NOT_FOUND_MEMBER_BY_EMAIL("M004", "Not found member by email", HttpStatus.BAD_REQUEST),
+	INVALID_PASSWORD("M005", "Password is not same", HttpStatus.BAD_REQUEST),
 
 	// Token Expiration
 	ACCESS_TOKEN_EXPIRATION("T001", "Access token is expired", HttpStatus.BAD_REQUEST),
