@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.payhere.accountbook.global.error.exception.MemberException;
 import com.payhere.accountbook.global.error.exception.TokenException;
 import com.payhere.accountbook.global.util.CoderUtil;
 
@@ -163,5 +164,9 @@ public class TokenService {
 		if (!this.verifyToken(refreshTokenValue)) {
 			throw TokenException.refreshTokenExpiration(refreshTokenValue);
 		}
+	}
+
+	public boolean isBlackList(String accessToken) {
+		return accessToken.split(" ")[0].equals("BL");
 	}
 }

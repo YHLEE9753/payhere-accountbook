@@ -38,5 +38,8 @@ public class MemberException extends BusinessException {
 		return new MemberException(ErrorCode.INVALID_PASSWORD, "비밀번호가 유효하지 않습니다.");
 	}
 
+	public static MemberException blackTypeTokenDetection() {
+		return new MemberException(ErrorCode.BlACK_TYPE_TOKEN_DETECTION, "로그아웃처리된 토큰으로 접속이 감지되었습니다");
+	}
 }
 

@@ -1,13 +1,10 @@
 package com.payhere.accountbook.global.security;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -54,10 +51,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			String[] roles = tokenService.getRole(accessToken);
 
 			Member member = memberRepository.findById(memberId).orElseThrow(() -> {
-				throw MemberException.notFoundMember(memberId);
+				throw MemberException.notFoundMemberById(memberId);
 			});
+
+			if(tokenService.isBlackList(member.getAccessToken())){
+				log.warn("JWT Attack is detected");
+				throw MemberException.blackTypeTokenDetection();
+			}
+
 			// 2. accessToken 은 유효하지만, refreshToken 이 만료 -> accessToken 을 검증하여 refreshToken 재발급
-			if (!isRefreshTokenValid(member.getRefreshTokenValue())) {
+			if (!isRefreshTokenValid(member.getRefreshToken())) {
 				String refreshToken = tokenService.generateRefreshToken(memberId, roles, new Date());
 				member.updateRefreshToken(refreshToken);
 			}
@@ -70,7 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			Member member = memberRepository.findByAccessTokenValue(accessToken).orElseThrow(() -> {
 				throw new RuntimeException();
 			});
-			String refreshTokenValue = member.getRefreshTokenValue();
+			String refreshTokenValue = member.getRefreshToken();
 			if (isRefreshTokenValid(refreshTokenValue)) {
 				String[] roles = tokenService.getRole(refreshTokenValue);
 				String accessTokenValue = tokenService.generateAccessToken(String.valueOf(member.getId()), roles);

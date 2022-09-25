@@ -18,6 +18,9 @@ public enum ErrorCode {
 	NICKNAME_DUPLICATED_MEMBER("M003", "Already existed nickname member", HttpStatus.BAD_REQUEST),
 	NOT_FOUND_MEMBER_BY_EMAIL("M004", "Not found member by email", HttpStatus.BAD_REQUEST),
 	INVALID_PASSWORD("M005", "Password is not same", HttpStatus.BAD_REQUEST),
+	BlACK_TYPE_TOKEN_DETECTION("M006", "Black type token is detected", HttpStatus.BAD_REQUEST),
+
+
 
 	// Token Expiration
 	ACCESS_TOKEN_EXPIRATION("T001", "Access token is expired", HttpStatus.BAD_REQUEST),
