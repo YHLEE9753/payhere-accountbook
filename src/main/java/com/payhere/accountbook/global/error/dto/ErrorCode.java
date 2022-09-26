@@ -22,6 +22,9 @@ public enum ErrorCode {
 	NOT_FOUND_MEMBER_BY_ACCESS_TOKEN("M007", "Not found member by access token", HttpStatus.BAD_REQUEST),
 	INVALID_EMAIL("M008", "Email is invalid", HttpStatus.BAD_REQUEST),
 
+	// Book
+	NOT_FOUND_BOOK_BY_ID("B001", "Not found book by id", HttpStatus.BAD_REQUEST),
+
 	// Token Expiration
 	ACCESS_TOKEN_EXPIRATION("T001", "Access token is expired", HttpStatus.BAD_REQUEST),
 	REFRESH_TOKEN_EXPIRATION("T002", "Refresh token is expired", HttpStatus.BAD_REQUEST);
