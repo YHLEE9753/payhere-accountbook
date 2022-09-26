@@ -22,6 +22,7 @@ import com.payhere.accountbook.global.error.exception.MemberException;
 import com.payhere.accountbook.global.security.token.Tokens;
 
 @SpringBootTest
+@Transactional
 class AuthenticationServiceTest {
 	@Autowired
 	MemberRepository memberRepository;
@@ -31,7 +32,6 @@ class AuthenticationServiceTest {
 	Member member1;
 
 	@BeforeEach
-	@Transactional
 	void beforeEach() {
 		member1 = new Member("test123@google.com", "qwer1234", "whale123");
 		Member member2 = new Member("test456@google.com", "qwer1234", "dolphin123");
@@ -40,7 +40,6 @@ class AuthenticationServiceTest {
 	}
 
 	@AfterEach
-	@Transactional
 	void afterEach() {
 		memberRepository.deleteAllInBatch();
 	}
@@ -137,6 +136,7 @@ class AuthenticationServiceTest {
 	}
 
 	@Test
+	@DisplayName("토큰을 저장한다")
 	void saveTokensTest () {
 	    // given
 		Long memberId = member1.getId();

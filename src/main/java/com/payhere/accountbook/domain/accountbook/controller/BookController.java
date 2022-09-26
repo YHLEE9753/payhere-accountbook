@@ -51,7 +51,7 @@ public class BookController {
 	@PatchMapping
 	public ResponseEntity<BookResponse> book(
 		@Valid @RequestBody BookUpdateRequest bookUpdateRequest
-	){
+	) {
 		BookResponse bookResponse = bookService.update(bookUpdateRequest);
 
 		return ResponseEntity
