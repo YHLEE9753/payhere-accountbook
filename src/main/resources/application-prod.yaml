@@ -1,9 +1,9 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
-    username: admin
-    password: 1234
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
+#    username: admin
+#    password: 1234
   jpa:
     database: mysql
     hibernate:
@@ -11,8 +11,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        show_sql: true
-        format_sql: true
+#        show_sql: true
+#        format_sql: true
 #    defer-datasource-initialization: true
 #  sql:
 #    init:
