@@ -10,3 +10,5 @@ endif::[]
 = Account Book API v1
 
 include::member-authentication.adoc[]
+include::book.adoc[]
+include::book-case.adoc[]

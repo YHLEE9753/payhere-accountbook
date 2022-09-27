@@ -84,7 +84,7 @@ class BookServiceTest {
 
 		// then
 		assertAll(
-			() -> assertThat(bookResponse.id()).isEqualTo(bookResponse.id()),
+			() -> assertThat(bookResponse.id()).isNotNull(),
 			() -> assertThat(bookResponse.year()).isEqualTo(2022),
 			() -> assertThat(bookResponse.month()).isEqualTo(8),
 			() -> assertThat(bookResponse.day()).isEqualTo(22),
@@ -105,7 +105,7 @@ class BookServiceTest {
 
 		// then
 		assertAll(
-			() -> assertThat(bookResponse.id()).isEqualTo(member.getId()),
+			() -> assertThat(bookResponse.id()).isNotNull(),
 			() -> assertThat(bookResponse.year()).isEqualTo(2022),
 			() -> assertThat(bookResponse.month()).isEqualTo(9),
 			() -> assertThat(bookResponse.day()).isEqualTo(27),

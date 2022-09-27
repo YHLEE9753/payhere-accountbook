@@ -22,11 +22,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE book_case SET is_delete = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE book_case SET is_delete = true WHERE book_case_id = ?")
 @Where(clause = "is_delete = false")
 public class BookCase extends BaseEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "book_case_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 

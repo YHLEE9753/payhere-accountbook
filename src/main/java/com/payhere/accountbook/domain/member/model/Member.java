@@ -31,7 +31,7 @@ public class Member {
 	@Column(name = "password", length = 16, nullable = false)
 	private String password;
 
-	@Column(name = "nickname", length = 10, unique = true, nullable = false)
+	@Column(name = "nickname", length = 16, unique = true, nullable = false)
 	private String nickname;
 
 	@Enumerated(value = EnumType.STRING)

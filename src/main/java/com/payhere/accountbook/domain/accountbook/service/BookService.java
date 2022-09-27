@@ -31,6 +31,7 @@ public class BookService {
 		return BookConverter.toBookResponse(book);
 	}
 
+	@Transactional
 	public BookResponse register(Long memberId, BookRegisterRequest bookRegisterRequest) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> {
 			throw MemberException.notFoundMemberById(memberId);

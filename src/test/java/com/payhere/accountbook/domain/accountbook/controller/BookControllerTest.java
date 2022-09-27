@@ -79,7 +79,7 @@ class BookControllerTest extends ControllerTestConfig {
 			.title("good day")
 			.build();
 		BookResponse bookResponse = getBookResponse(2022L, 9L, 12L, "good day");
-		given(bookService.register(anyLong(), any())).willReturn(bookResponse);
+		given(bookService.register(any(), any())).willReturn(bookResponse);
 
 		// when
 		ResultActions resultActions = mockMvc.perform(
@@ -118,11 +118,11 @@ class BookControllerTest extends ControllerTestConfig {
 
 	@Test
 	@DisplayName("/api/v1/book 에서 가계부(일)을 수정한다")
-	void patchMember() throws Exception {
+	void patchBook() throws Exception {
 		// given
 		BookUpdateRequest bookUpdateRequest = new BookUpdateRequest(1L, "changed day");
 		BookResponse bookResponse = getBookResponse(2022L, 9L, 17L, "changed day");
-		given(bookService.register(anyLong(), any())).willReturn(bookResponse);
+		given(bookService.update(any())).willReturn(bookResponse);
 
 		// when
 		ResultActions resultActions = mockMvc.perform(

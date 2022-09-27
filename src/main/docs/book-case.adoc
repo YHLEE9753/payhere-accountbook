@@ -1,0 +1,21 @@
+== 가계부(단건)
+
+=== 조회
+
+operation::get-book-case[snippets='http-request,request-headers,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 등록
+
+operation::post-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 수정
+
+operation::patch-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 삭제(soft delete)
+
+operation::delete-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''

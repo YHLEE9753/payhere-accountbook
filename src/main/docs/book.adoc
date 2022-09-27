@@ -1,0 +1,16 @@
+== 가계부(일)
+
+=== 조회
+
+operation::get-book[snippets='http-request,request-headers,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 등록
+
+operation::post-book[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 수정
+
+operation::patch-book[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''
