@@ -24,6 +24,7 @@ public enum ErrorCode {
 
 	// Book
 	NOT_FOUND_BOOK_BY_ID("B001", "Not found book by id", HttpStatus.BAD_REQUEST),
+	NOT_FOUND_BOOK_CASE_BY_ID("B002", "Not found bookCase by id", HttpStatus.BAD_REQUEST),
 
 	// Token Expiration
 	ACCESS_TOKEN_EXPIRATION("T001", "Access token is expired", HttpStatus.BAD_REQUEST),

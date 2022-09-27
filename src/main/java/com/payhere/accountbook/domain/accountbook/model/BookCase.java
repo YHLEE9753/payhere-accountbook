@@ -9,7 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.payhere.accountbook.domain.member.model.Member;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.payhere.accountbook.global.base.BaseEntity;
 
 import lombok.AccessLevel;
@@ -20,24 +22,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Book extends BaseEntity {
+@SQLDelete(sql = "UPDATE book_case SET is_delete = true WHERE id = ?")
+@Where(clause = "is_delete = false")
+public class BookCase extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "book_id", unique = true, nullable = false, updatable = false)
+	@Column(name = "book_case_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY) // n:1 매핑
-	@JoinColumn(name = "member_id")
-	private Member member;
-
-	@Column(name = "year", nullable = false)
-	private Long year;
-
-	@Column(name = "month", nullable = false)
-	private Long month;
-
-	@Column(name = "day", nullable = false)
-	private Long day;
+	@JoinColumn(name = "book_id")
+	private Book book;
 
 	@Column(name = "income", nullable = false)
 	private Long income;
@@ -48,27 +43,25 @@ public class Book extends BaseEntity {
 	@Column(name = "title", length = 32, nullable = false)
 	private String title;
 
+	@Column(name = "place", length = 128, nullable = false)
+	private String place;
+
 	@Column(name = "is_delete")
-	private boolean isDelete;
+	private boolean isDelete = Boolean.FALSE;
 
 	@Builder
-	public Book(Member member, Long year, Long month, Long day, String title) {
-		this.member = member;
-		this.year = year;
-		this.month = month;
-		this.day = day;
-		this.income = 0L;
-		this.outcome = 0L;
+	public BookCase(Book book, Long income, Long outcome, String title, String place) {
+		this.book = book;
+		this.income = income;
+		this.outcome = outcome;
 		this.title = title;
-		this.isDelete = false;
+		this.place = place;
 	}
 
-	public void changeTitle(String title){
+	public void change(Long income, Long outcome, String title, String place) {
+		this.income = income;
+		this.outcome = outcome;
 		this.title = title;
-	}
-
-	public void changeIncomeAndOutcome(Long income, Long outcome) {
-		this.income += income;
-		this.outcome += outcome;
+		this.place = place;
 	}
 }

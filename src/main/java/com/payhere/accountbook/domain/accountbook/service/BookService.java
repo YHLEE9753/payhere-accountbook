@@ -28,17 +28,17 @@ public class BookService {
 			throw BookException.notFoundBookById(bookId);
 		});
 
-		return BookConverter.toAccountBookResponse(book);
+		return BookConverter.toBookResponse(book);
 	}
 
 	public BookResponse register(Long memberId, BookRegisterRequest bookRegisterRequest) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> {
 			throw MemberException.notFoundMemberById(memberId);
 		});
-		Book book = BookConverter.toAccountBook(member, bookRegisterRequest);
+		Book book = BookConverter.toBook(member, bookRegisterRequest);
 		Book savedBook = bookRepository.save(book);
 
-		return BookConverter.toAccountBookResponse(savedBook);
+		return BookConverter.toBookResponse(savedBook);
 	}
 
 	@Transactional
@@ -50,7 +50,7 @@ public class BookService {
 
 		book.changeTitle(bookUpdateRequest.title());
 
-		return BookConverter.toAccountBookResponse(book);
+		return BookConverter.toBookResponse(book);
 
 
 	}

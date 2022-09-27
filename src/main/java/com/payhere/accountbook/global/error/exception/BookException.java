@@ -14,8 +14,13 @@ public class BookException extends BusinessException {
 		super(errorCode, message, cause);
 	}
 
-	public static MemberException notFoundBookById(Long bookId) {
-		return new MemberException(ErrorCode.NOT_FOUND_BOOK_BY_ID,
+	public static BookException notFoundBookById(Long bookId) {
+		return new BookException(ErrorCode.NOT_FOUND_BOOK_BY_ID,
 			MessageFormat.format("가계부(일)을 id로 찾을 수 없습니다. (id: {0})", bookId));
+	}
+
+	public static BookException notFoundBookCaseById(Long bookCaseId) {
+		return new BookException(ErrorCode.NOT_FOUND_BOOK_CASE_BY_ID,
+			MessageFormat.format("가계부 단건 케이스를 id로 찾을 수 없습니다. (id: {0})", bookCaseId));
 	}
 }
