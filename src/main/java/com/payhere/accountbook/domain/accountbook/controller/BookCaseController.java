@@ -1,5 +1,6 @@
 package com.payhere.accountbook.domain.accountbook.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseRegiste
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.service.BookCaseService;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponses;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +37,17 @@ public class BookCaseController {
 		return ResponseEntity
 			.ok()
 			.body(bookCaseResponse);
+	}
+
+	@GetMapping("/{bookId}/bookcase")
+	public ResponseEntity<BookCaseResponses> books(
+		@PathVariable Long bookId
+	) {
+		BookCaseResponses bookCaseResponses = bookCaseService.findBookCases(bookId);
+
+		return ResponseEntity
+			.ok()
+			.body(bookCaseResponses);
 	}
 
 	@PostMapping("/{bookId}/bookcase")
@@ -61,7 +74,7 @@ public class BookCaseController {
 	}
 
 	@DeleteMapping("/{bookId}/bookcase")
-	public ResponseEntity<BookCaseResponse> book(
+	public ResponseEntity<BookCaseResponse> bookCase(
 		@Valid @RequestBody BookCaseDeleteRequest bookCaseDeleteRequest
 	) {
 		BookCaseResponse bookCaseResponse = bookCaseService.delete(bookCaseDeleteRequest);

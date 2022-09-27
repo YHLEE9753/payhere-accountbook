@@ -3,6 +3,8 @@ package com.payhere.accountbook.domain.accountbook.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +17,7 @@ import com.payhere.accountbook.domain.accountbook.controller.dto.BookUpdateReque
 import com.payhere.accountbook.domain.accountbook.model.Book;
 import com.payhere.accountbook.domain.accountbook.repository.BookRepository;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookResponses;
 import com.payhere.accountbook.domain.member.model.Member;
 import com.payhere.accountbook.domain.member.repository.MemberRepository;
 
@@ -60,6 +63,30 @@ class BookServiceTest {
 		// then
 		assertAll(
 			() -> assertThat(bookResponse.id()).isEqualTo(bookId),
+			() -> assertThat(bookResponse.year()).isEqualTo(2022),
+			() -> assertThat(bookResponse.month()).isEqualTo(9),
+			() -> assertThat(bookResponse.day()).isEqualTo(27),
+			() -> assertThat(bookResponse.income()).isEqualTo(0),
+			() -> assertThat(bookResponse.outcome()).isEqualTo(0),
+			() -> assertThat(bookResponse.title()).isEqualTo("happy day"),
+			() -> assertThat(bookResponse.memo()).isEqualTo("memo")
+		);
+	}
+
+	@Test
+	@DisplayName("가계부(일)을 memberId 로 전부 찾는다")
+	void findBooksTest() {
+		// given
+		Long memberId = member.getId();
+
+		// when
+		List<BookResponse> books = bookService.findBooks(memberId).books();
+		BookResponse bookResponse = books.get(0);
+
+		// then
+		assertThat(books.size()).isEqualTo(1);
+		assertAll(
+			() -> assertThat(bookResponse.id()).isNotNull(),
 			() -> assertThat(bookResponse.year()).isEqualTo(2022),
 			() -> assertThat(bookResponse.month()).isEqualTo(9),
 			() -> assertThat(bookResponse.day()).isEqualTo(27),

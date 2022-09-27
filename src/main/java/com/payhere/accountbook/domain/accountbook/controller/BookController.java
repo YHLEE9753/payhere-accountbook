@@ -16,6 +16,7 @@ import com.payhere.accountbook.domain.accountbook.controller.dto.BookRegisterReq
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.service.BookService;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookResponses;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +35,17 @@ public class BookController {
 		return ResponseEntity
 			.ok()
 			.body(bookResponse);
+	}
+
+	@GetMapping
+	public ResponseEntity<BookResponses> books(
+		@AuthenticationPrincipal Long memberId
+	) {
+		BookResponses bookResponses = bookService.findBooks(memberId);
+
+		return ResponseEntity
+			.ok()
+			.body(bookResponses);
 	}
 
 	@PostMapping

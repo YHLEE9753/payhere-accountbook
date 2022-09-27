@@ -1,6 +1,9 @@
 package com.payhere.accountbook.domain.accountbook.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +12,7 @@ import com.payhere.accountbook.domain.accountbook.controller.dto.BookUpdateReque
 import com.payhere.accountbook.domain.accountbook.model.Book;
 import com.payhere.accountbook.domain.accountbook.repository.BookRepository;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookResponses;
 import com.payhere.accountbook.domain.member.model.Member;
 import com.payhere.accountbook.domain.member.repository.MemberRepository;
 import com.payhere.accountbook.global.error.exception.BookException;
@@ -29,6 +33,20 @@ public class BookService {
 		});
 
 		return BookConverter.toBookResponse(book);
+	}
+
+	@Transactional(readOnly = true)
+	public BookResponses findBooks(Long memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+			throw MemberException.notFoundMemberById(memberId);
+		});
+		List<Book> books = bookRepository.findByMember(member);
+		List<BookResponse> bookResponses = new ArrayList<>();
+		for(Book book : books){
+			bookResponses.add(BookConverter.toBookResponse(book));
+		}
+
+		return new BookResponses(bookResponses);
 	}
 
 	@Transactional

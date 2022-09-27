@@ -1,5 +1,8 @@
 package com.payhere.accountbook.domain.accountbook.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +14,7 @@ import com.payhere.accountbook.domain.accountbook.model.BookCase;
 import com.payhere.accountbook.domain.accountbook.repository.BookCaseRepository;
 import com.payhere.accountbook.domain.accountbook.repository.BookRepository;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponses;
 import com.payhere.accountbook.global.error.exception.BookException;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +32,20 @@ public class BookCaseService {
 		});
 
 		return BookConverter.toBookCaseResponse(bookCase);
+	}
+
+	@Transactional(readOnly = true)
+	public BookCaseResponses findBookCases(Long bookId) {
+		Book book = bookRepository.findById(bookId).orElseThrow(() -> {
+			throw BookException.notFoundBookById(bookId);
+		});
+		List<BookCase> bookCases = bookCaseRepository.findByBook(book);
+		List<BookCaseResponse> bookCaseResponses = new ArrayList<>();
+		for(BookCase bookCase : bookCases){
+			bookCaseResponses.add(BookConverter.toBookCaseResponse(bookCase));
+		}
+
+		return new BookCaseResponses(bookCaseResponses);
 	}
 
 	@Transactional

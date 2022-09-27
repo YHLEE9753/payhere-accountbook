@@ -3,6 +3,8 @@ package com.payhere.accountbook.domain.accountbook.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +20,8 @@ import com.payhere.accountbook.domain.accountbook.model.BookCase;
 import com.payhere.accountbook.domain.accountbook.repository.BookCaseRepository;
 import com.payhere.accountbook.domain.accountbook.repository.BookRepository;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponses;
+import com.payhere.accountbook.domain.accountbook.service.dto.BookResponse;
 import com.payhere.accountbook.domain.member.model.Member;
 import com.payhere.accountbook.domain.member.repository.MemberRepository;
 
@@ -77,6 +81,28 @@ class BookCaseServiceTest {
 		// then
 		assertAll(
 			() -> assertThat(bookCaseResponse.id()).isEqualTo(bookCaseId),
+			() -> assertThat(bookCaseResponse.income()).isEqualTo(3000),
+			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(1500),
+			() -> assertThat(bookCaseResponse.title()).isEqualTo("e-mart shopping"),
+			() -> assertThat(bookCaseResponse.place()).isEqualTo("e-mart"),
+			() -> assertThat(bookCaseResponse.memo()).isEqualTo("memo")
+		);
+	}
+
+	@Test
+	@DisplayName("가계부(단건)을 가계부(일일) id 로 전부 찾는다.")
+	void findBookCasesTest() {
+		// given
+		Long bookId = book.getId();
+
+		// when
+		List<BookCaseResponse> bookCases = bookCaseService.findBookCases(bookId).bookCases();
+		BookCaseResponse bookCaseResponse = bookCases.get(0);
+
+		// then
+		assertThat(bookCases.size()).isEqualTo(1);
+		assertAll(
+			() -> assertThat(bookCaseResponse.id()).isNotNull(),
 			() -> assertThat(bookCaseResponse.income()).isEqualTo(3000),
 			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(1500),
 			() -> assertThat(bookCaseResponse.title()).isEqualTo("e-mart shopping"),

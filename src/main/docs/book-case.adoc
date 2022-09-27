@@ -1,8 +1,13 @@
 == 가계부(단건)
 
-=== 조회
+=== 단건조회
 
 operation::get-book-case[snippets='http-request,path-parameters,request-headers,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 전체조회
+
+operation::get-book-cases[snippets='http-request,path-parameters,request-headers,http-response,response-headers,response-body,response-fields']
 '''
 
 === 등록
