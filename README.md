@@ -7,4 +7,5 @@
 
 ### 개발
 **feat1 (220924-220925)** : 공통 설정 추가(JPA Audit, Error 핸들링, Security), JWT 토큰 추가, AccessToken, RefreshToken 기반의 인증 filter 작성<br>
-**feat2 (220925-220900)** : Member 모델 작성, Member 회원가입 로그인 로그아웃 controller, service 로직 및 테스트 코드 작성, JWT 기반 인증 인가 POST Man 테스트 및 로직 완성, 토큰 타입 BL 체크 로직 추가
+**feat2 (220925-220906)** : Member 모델 작성, Member 회원가입 로그인 로그아웃 controller, service 로직 및 테스트 코드 작성, JWT 기반 인증 인가 POST Man 테스트 및 로직 완성, 토큰 타입 BL 체크 로직 추가<br>
+**feat3 (220926-220927)** : book, bookCase CRUD, bookCase soft delete 적용, 서비스 테스트 코드 작성, 컨트롤러 테스트 코드 작성, rest-docs 최산화<br>
