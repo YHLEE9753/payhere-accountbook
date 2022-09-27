@@ -50,7 +50,7 @@ public class BookCaseService {
 		});
 
 		bookCase.change(bookCaseUpdateRequest.income(), bookCaseUpdateRequest.outcome(), bookCaseUpdateRequest.title(),
-			bookCaseUpdateRequest.place());
+			bookCaseUpdateRequest.place(), bookCaseUpdateRequest.memo());
 
 		return BookConverter.toBookCaseResponse(bookCase);
 	}

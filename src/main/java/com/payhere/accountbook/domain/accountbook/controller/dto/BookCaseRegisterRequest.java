@@ -13,7 +13,8 @@ public record BookCaseRegisterRequest(
 	@NotBlank
 	String title,
 	@NotBlank
-	String place
+	String place,
+	String memo
 ) {
 	@Builder
 	public BookCaseRegisterRequest {

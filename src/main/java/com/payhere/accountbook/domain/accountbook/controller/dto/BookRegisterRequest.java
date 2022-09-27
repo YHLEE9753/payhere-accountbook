@@ -13,7 +13,8 @@ public record BookRegisterRequest(
 	@NotNull
 	Long day,
 	@NotBlank
-	String title
+	String title,
+	String memo
 ) {
 	@Builder
 	public BookRegisterRequest {

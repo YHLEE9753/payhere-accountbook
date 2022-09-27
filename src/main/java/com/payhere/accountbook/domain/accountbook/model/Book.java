@@ -48,11 +48,14 @@ public class Book extends BaseEntity {
 	@Column(name = "title", length = 32, nullable = false)
 	private String title;
 
+	@Column(name = "memo", length = 256)
+	private String memo;
+
 	@Column(name = "is_delete")
 	private boolean isDelete;
 
 	@Builder
-	public Book(Member member, Long year, Long month, Long day, String title) {
+	public Book(Member member, Long year, Long month, Long day, String title, String memo) {
 		this.member = member;
 		this.year = year;
 		this.month = month;
@@ -60,11 +63,13 @@ public class Book extends BaseEntity {
 		this.income = 0L;
 		this.outcome = 0L;
 		this.title = title;
+		this.memo = memo;
 		this.isDelete = false;
 	}
 
-	public void changeTitle(String title){
+	public void changeTitleAndMemo(String title, String memo){
 		this.title = title;
+		this.memo = memo;
 	}
 
 	public void changeIncomeAndOutcome(Long income, Long outcome) {

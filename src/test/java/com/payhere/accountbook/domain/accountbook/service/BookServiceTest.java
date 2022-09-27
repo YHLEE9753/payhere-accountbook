@@ -38,6 +38,7 @@ class BookServiceTest {
 			.month(9L)
 			.day(27L)
 			.title("happy day")
+			.memo("memo")
 			.build());
 	}
 
@@ -64,7 +65,8 @@ class BookServiceTest {
 			() -> assertThat(bookResponse.day()).isEqualTo(27),
 			() -> assertThat(bookResponse.income()).isEqualTo(0),
 			() -> assertThat(bookResponse.outcome()).isEqualTo(0),
-			() -> assertThat(bookResponse.title()).isEqualTo("happy day")
+			() -> assertThat(bookResponse.title()).isEqualTo("happy day"),
+			() -> assertThat(bookResponse.memo()).isEqualTo("memo")
 		);
 	}
 
@@ -77,6 +79,7 @@ class BookServiceTest {
 			.month(8L)
 			.day(22L)
 			.title("hello August")
+			.memo("memo")
 			.build();
 
 		// when
@@ -90,7 +93,8 @@ class BookServiceTest {
 			() -> assertThat(bookResponse.day()).isEqualTo(22),
 			() -> assertThat(bookResponse.income()).isEqualTo(0),
 			() -> assertThat(bookResponse.outcome()).isEqualTo(0),
-			() -> assertThat(bookResponse.title()).isEqualTo("hello August")
+			() -> assertThat(bookResponse.title()).isEqualTo("hello August"),
+			() -> assertThat(bookResponse.memo()).isEqualTo("memo")
 		);
 	}
 
@@ -98,7 +102,7 @@ class BookServiceTest {
 	@DisplayName("가계부(일)를 수정한다")
 	void updateBookTest() {
 		// given
-		BookUpdateRequest bookUpdateRequest = new BookUpdateRequest(book.getId(), "changed title");
+		BookUpdateRequest bookUpdateRequest = new BookUpdateRequest(book.getId(), "changed title","memo");
 
 		// when
 		BookResponse bookResponse = bookService.update(bookUpdateRequest);
@@ -111,7 +115,8 @@ class BookServiceTest {
 			() -> assertThat(bookResponse.day()).isEqualTo(27),
 			() -> assertThat(bookResponse.income()).isEqualTo(0),
 			() -> assertThat(bookResponse.outcome()).isEqualTo(0),
-			() -> assertThat(bookResponse.title()).isEqualTo("changed title")
+			() -> assertThat(bookResponse.title()).isEqualTo("changed title"),
+			() -> assertThat(bookResponse.memo()).isEqualTo("memo")
 		);
 	}
 }

@@ -20,6 +20,7 @@ public class BookConverter {
 			.month(bookRegisterRequest.month())
 			.day(bookRegisterRequest.day())
 			.title(bookRegisterRequest.title())
+			.memo(bookRegisterRequest.memo())
 			.build();
 	}
 
@@ -32,6 +33,7 @@ public class BookConverter {
 			.income(savedBook.getIncome())
 			.outcome(savedBook.getOutcome())
 			.title(savedBook.getTitle())
+			.memo(savedBook.getMemo())
 			.build();
 	}
 
@@ -42,6 +44,7 @@ public class BookConverter {
 			.outcome(bookCase.getOutcome())
 			.title(bookCase.getTitle())
 			.place(bookCase.getPlace())
+			.memo(bookCase.getMemo())
 			.build();
 	}
 
@@ -52,6 +55,7 @@ public class BookConverter {
 			.outcome(bookCaseRegisterRequest.outcome())
 			.title(bookCaseRegisterRequest.title())
 			.place(bookCaseRegisterRequest.place())
+			.memo(bookCaseRegisterRequest.memo())
 			.build();
 	}
 }

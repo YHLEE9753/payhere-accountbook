@@ -63,7 +63,8 @@ class BookControllerTest extends ControllerTestConfig {
 					fieldWithPath("day").type(NUMBER).description("일"),
 					fieldWithPath("income").type(NUMBER).description("일일 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("일일 지출"),
-					fieldWithPath("title").type(STRING).description("제목")
+					fieldWithPath("title").type(STRING).description("제목"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -76,6 +77,7 @@ class BookControllerTest extends ControllerTestConfig {
 			.month(9L)
 			.day(12L)
 			.title("good day")
+			.memo("memo")
 			.build();
 		BookResponse bookResponse = getBookResponse(2022L, 9L, 12L, "good day");
 		given(bookService.register(any(), any())).willReturn(bookResponse);
@@ -98,7 +100,8 @@ class BookControllerTest extends ControllerTestConfig {
 					fieldWithPath("year").type(NUMBER).description("년"),
 					fieldWithPath("month").type(NUMBER).description("월"),
 					fieldWithPath("day").type(NUMBER).description("일"),
-					fieldWithPath("title").type(STRING).description("제목")
+					fieldWithPath("title").type(STRING).description("제목"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				),
 				responseHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
@@ -110,7 +113,8 @@ class BookControllerTest extends ControllerTestConfig {
 					fieldWithPath("day").type(NUMBER).description("일"),
 					fieldWithPath("income").type(NUMBER).description("일일 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("일일 지출"),
-					fieldWithPath("title").type(STRING).description("제목")
+					fieldWithPath("title").type(STRING).description("제목"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -118,7 +122,7 @@ class BookControllerTest extends ControllerTestConfig {
 	@DisplayName("/api/v1/book 에서 가계부(일)을 수정한다")
 	void patchBook() throws Exception {
 		// given
-		BookUpdateRequest bookUpdateRequest = new BookUpdateRequest(1L, "changed day");
+		BookUpdateRequest bookUpdateRequest = new BookUpdateRequest(1L, "changed day","memo");
 		BookResponse bookResponse = getBookResponse(2022L, 9L, 17L, "changed day");
 		given(bookService.update(any())).willReturn(bookResponse);
 
@@ -138,7 +142,8 @@ class BookControllerTest extends ControllerTestConfig {
 				),
 				requestFields(
 					fieldWithPath("id").type(NUMBER).description("가계부(일) 아이디"),
-					fieldWithPath("title").type(STRING).description("변경할 제목")
+					fieldWithPath("title").type(STRING).description("변경할 제목"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				),
 				responseHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
@@ -150,7 +155,8 @@ class BookControllerTest extends ControllerTestConfig {
 					fieldWithPath("day").type(NUMBER).description("일"),
 					fieldWithPath("income").type(NUMBER).description("일일 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("일일 지출"),
-					fieldWithPath("title").type(STRING).description("제목")
+					fieldWithPath("title").type(STRING).description("제목"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -163,6 +169,7 @@ class BookControllerTest extends ControllerTestConfig {
 			.income(2500L)
 			.outcome(1200L)
 			.title(title)
+			.memo("memo")
 			.build();
 	}
 }

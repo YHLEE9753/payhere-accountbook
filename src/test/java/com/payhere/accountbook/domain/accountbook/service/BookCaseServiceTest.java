@@ -45,6 +45,7 @@ class BookCaseServiceTest {
 			.month(9L)
 			.day(27L)
 			.title("happy day")
+			.memo("memo")
 			.build());
 		bookCase = bookCaseRepository.save(BookCase.builder()
 			.book(book)
@@ -52,6 +53,7 @@ class BookCaseServiceTest {
 			.outcome(1500L)
 			.title("e-mart shopping")
 			.place("e-mart")
+			.memo("memo")
 			.build()
 		);
 	}
@@ -78,7 +80,8 @@ class BookCaseServiceTest {
 			() -> assertThat(bookCaseResponse.income()).isEqualTo(3000),
 			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(1500),
 			() -> assertThat(bookCaseResponse.title()).isEqualTo("e-mart shopping"),
-			() -> assertThat(bookCaseResponse.place()).isEqualTo("e-mart")
+			() -> assertThat(bookCaseResponse.place()).isEqualTo("e-mart"),
+			() -> assertThat(bookCaseResponse.memo()).isEqualTo("memo")
 		);
 	}
 
@@ -91,6 +94,7 @@ class BookCaseServiceTest {
 			.outcome(1500L)
 			.title("ice coffee")
 			.place("mega coffee")
+			.memo("memo")
 			.build();
 
 		// when
@@ -102,7 +106,8 @@ class BookCaseServiceTest {
 			() -> assertThat(bookCaseResponse.income()).isEqualTo(4500),
 			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(1500),
 			() -> assertThat(bookCaseResponse.title()).isEqualTo("ice coffee"),
-			() -> assertThat(bookCaseResponse.place()).isEqualTo("mega coffee")
+			() -> assertThat(bookCaseResponse.place()).isEqualTo("mega coffee"),
+			() -> assertThat(bookCaseResponse.memo()).isEqualTo("memo")
 		);
 	}
 
@@ -116,6 +121,7 @@ class BookCaseServiceTest {
 			.outcome(4000L)
 			.title("change title")
 			.place("change place")
+			.memo("memo")
 			.build();
 
 		// when
@@ -127,7 +133,8 @@ class BookCaseServiceTest {
 			() -> assertThat(bookCaseResponse.income()).isEqualTo(7000),
 			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(4000),
 			() -> assertThat(bookCaseResponse.title()).isEqualTo("change title"),
-			() -> assertThat(bookCaseResponse.place()).isEqualTo("change place")
+			() -> assertThat(bookCaseResponse.place()).isEqualTo("change place"),
+			() -> assertThat(bookCaseResponse.memo()).isEqualTo("memo")
 		);
 	}
 
@@ -150,6 +157,7 @@ class BookCaseServiceTest {
 			() -> assertThat(softDeletedBookCase.getOutcome()).isEqualTo(1500),
 			() -> assertThat(softDeletedBookCase.getTitle()).isEqualTo("e-mart shopping"),
 			() -> assertThat(softDeletedBookCase.getPlace()).isEqualTo("e-mart"),
+			() -> assertThat(softDeletedBookCase.getMemo()).isEqualTo("memo"),
 			() -> assertThat(softDeletedBookCase.isDelete()).isTrue()
 		);
 	}

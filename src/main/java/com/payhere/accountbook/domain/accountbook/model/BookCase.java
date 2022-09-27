@@ -46,22 +46,27 @@ public class BookCase extends BaseEntity {
 	@Column(name = "place", length = 128, nullable = false)
 	private String place;
 
+	@Column(name = "memo", length = 256)
+	private String memo;
+
 	@Column(name = "is_delete")
 	private boolean isDelete = Boolean.FALSE;
 
 	@Builder
-	public BookCase(Book book, Long income, Long outcome, String title, String place) {
+	public BookCase(Book book, Long income, Long outcome, String title, String place, String memo) {
 		this.book = book;
 		this.income = income;
 		this.outcome = outcome;
 		this.title = title;
 		this.place = place;
+		this.memo = memo;
 	}
 
-	public void change(Long income, Long outcome, String title, String place) {
+	public void change(Long income, Long outcome, String title, String place, String memo) {
 		this.income = income;
 		this.outcome = outcome;
 		this.title = title;
 		this.place = place;
+		this.memo = memo;
 	}
 }

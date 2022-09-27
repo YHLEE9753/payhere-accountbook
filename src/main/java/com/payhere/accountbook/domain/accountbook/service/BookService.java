@@ -49,7 +49,7 @@ public class BookService {
 			throw BookException.notFoundBookById(bookId);
 		});
 
-		book.changeTitle(bookUpdateRequest.title());
+		book.changeTitleAndMemo(bookUpdateRequest.title(), bookUpdateRequest.memo());
 
 		return BookConverter.toBookResponse(book);
 

@@ -15,7 +15,8 @@ public record BookCaseUpdateRequest (
 	@NotBlank
 	String title,
 	@NotBlank
-	String place
+	String place,
+	String memo
 ) {
 	@Builder
 	public BookCaseUpdateRequest {

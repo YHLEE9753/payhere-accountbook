@@ -7,6 +7,7 @@ public record BookUpdateRequest(
 	@NotNull
 	Long id,
 	@NotBlank
-	String title
+	String title,
+	String memo
 ) {
 }

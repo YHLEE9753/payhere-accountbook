@@ -7,7 +7,8 @@ public record BookCaseResponse(
 	Long income,
 	Long outcome,
 	String title,
-	String place
+	String place,
+	String memo
 ) {
 	@Builder
 	public BookCaseResponse {

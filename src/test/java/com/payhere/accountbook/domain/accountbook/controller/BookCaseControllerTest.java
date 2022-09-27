@@ -65,7 +65,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -78,6 +79,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 			.outcome(5000L)
 			.title("one coffee")
 			.place("mega coffee")
+			.memo("memo")
 			.build();
 		BookCaseResponse bookCaseResponse = getBookCaseResponse();
 		given(bookCaseService.register(any(), any())).willReturn(bookCaseResponse);
@@ -103,7 +105,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				),
 				responseHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
@@ -113,7 +116,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -127,6 +131,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 			.outcome(5000L)
 			.title("one coffee")
 			.place("mega coffee")
+			.memo("memo")
 			.build();
 		BookCaseResponse bookCaseResponse = getBookCaseResponse();
 		given(bookCaseService.update(any())).willReturn(bookCaseResponse);
@@ -153,7 +158,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				),
 				responseHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
@@ -163,7 +169,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -203,7 +210,8 @@ class BookCaseControllerTest extends ControllerTestConfig {
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
-					fieldWithPath("place").type(STRING).description("장소")
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
 				)));
 	}
 
@@ -214,6 +222,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 			.outcome(5000L)
 			.title("one coffee")
 			.place("mega coffee")
+			.memo("memo")
 			.build();
 	}
 }

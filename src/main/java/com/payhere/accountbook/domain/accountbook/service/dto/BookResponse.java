@@ -9,7 +9,8 @@ public record BookResponse(
 	Long day,
 	Long income,
 	Long outcome,
-	String title
+	String title,
+	String memo
 ){
 	@Builder
 	public BookResponse {
