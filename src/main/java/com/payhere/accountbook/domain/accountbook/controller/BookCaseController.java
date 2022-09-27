@@ -21,12 +21,12 @@ import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/bookcase")
+@RequestMapping("/api/v1/book")
 @RequiredArgsConstructor
 public class BookCaseController {
 	private final BookCaseService bookCaseService;
 
-	@GetMapping("/{bookCaseId}")
+	@GetMapping("/{bookId}/bookcase/{bookCaseId}")
 	public ResponseEntity<BookCaseResponse> bookCase(
 		@PathVariable Long bookCaseId
 	) {
@@ -37,18 +37,19 @@ public class BookCaseController {
 			.body(bookCaseResponse);
 	}
 
-	@PostMapping
+	@PostMapping("/{bookId}/bookcase")
 	public ResponseEntity<BookCaseResponse> bookCase(
+		@PathVariable Long bookId,
 		@Valid @RequestBody BookCaseRegisterRequest bookCaseRegisterRequest
 	) {
-		BookCaseResponse bookCaseResponse = bookCaseService.register(bookCaseRegisterRequest);
+		BookCaseResponse bookCaseResponse = bookCaseService.register(bookId,bookCaseRegisterRequest);
 
 		return ResponseEntity
 			.ok()
 			.body(bookCaseResponse);
 	}
 
-	@PatchMapping
+	@PatchMapping("/{bookId}/bookcase")
 	public ResponseEntity<BookCaseResponse> bookCase(
 		@Valid @RequestBody BookCaseUpdateRequest bookCaseUpdateRequest
 	) {
@@ -59,7 +60,7 @@ public class BookCaseController {
 			.body(bookCaseResponse);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{bookId}/bookcase")
 	public ResponseEntity<BookCaseResponse> book(
 		@Valid @RequestBody BookCaseDeleteRequest bookCaseDeleteRequest
 	) {

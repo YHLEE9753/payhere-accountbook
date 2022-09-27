@@ -2,20 +2,20 @@
 
 === 조회
 
-operation::get-book-case[snippets='http-request,request-headers,http-response,response-headers,response-body,response-fields']
+operation::get-book-case[snippets='http-request,path-parameters,request-headers,http-response,response-headers,response-body,response-fields']
 '''
 
 === 등록
 
-operation::post-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+operation::post-book-case[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-headers,response-body,response-fields']
 '''
 
 === 수정
 
-operation::patch-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+operation::patch-book-case[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-headers,response-body,response-fields']
 '''
 
 === 삭제(soft delete)
 
-operation::delete-book-case[snippets='http-request,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+operation::delete-book-case[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-headers,response-body,response-fields']
 '''

@@ -65,8 +65,8 @@ class BookCaseServiceTest {
 
 	@Test
 	@DisplayName("가계부(단건)을 id 로 찾는다.")
-	void findBookCaseTest () {
-	    // given
+	void findBookCaseTest() {
+		// given
 		Long bookCaseId = bookCase.getId();
 
 		// when
@@ -84,18 +84,17 @@ class BookCaseServiceTest {
 
 	@Test
 	@DisplayName("가계부(단건)을 생성한다")
-	void registerBookCaseTest () {
-	    // given
+	void registerBookCaseTest() {
+		// given
 		BookCaseRegisterRequest bookCaseRegisterRequest = BookCaseRegisterRequest.builder()
-			.bookId(book.getId())
 			.income(4500L)
 			.outcome(1500L)
 			.title("ice coffee")
 			.place("mega coffee")
 			.build();
 
-	    // when
-		BookCaseResponse bookCaseResponse = bookCaseService.register(bookCaseRegisterRequest);
+		// when
+		BookCaseResponse bookCaseResponse = bookCaseService.register(book.getId(), bookCaseRegisterRequest);
 
 		// then
 		assertAll(
@@ -109,10 +108,9 @@ class BookCaseServiceTest {
 
 	@Test
 	@DisplayName("가계부(단건)을 수정한다")
-	void updateBookCaseTest () {
-	    // given
+	void updateBookCaseTest() {
+		// given
 		BookCaseUpdateRequest bookCaseUpdateRequest = BookCaseUpdateRequest.builder()
-			.bookId(book.getId())
 			.id(bookCase.getId())
 			.income(7000L)
 			.outcome(4000L)
@@ -120,7 +118,7 @@ class BookCaseServiceTest {
 			.place("change place")
 			.build();
 
-	    // when
+		// when
 		BookCaseResponse bookCaseResponse = bookCaseService.update(bookCaseUpdateRequest);
 
 		// then
@@ -135,11 +133,11 @@ class BookCaseServiceTest {
 
 	@Test
 	@DisplayName("가계부(단건)을 삭제한다")
-	void deleteBookCaseTest () {
-	    // given
-		BookCaseDeleteRequest bookCaseDeleteRequest = new BookCaseDeleteRequest(book.getId(), bookCase.getId());
+	void deleteBookCaseTest() {
+		// given
+		BookCaseDeleteRequest bookCaseDeleteRequest = new BookCaseDeleteRequest(bookCase.getId());
 
-	    // when
+		// when
 		BookCaseResponse bookCaseResponse = bookCaseService.delete(bookCaseDeleteRequest);
 
 		// then

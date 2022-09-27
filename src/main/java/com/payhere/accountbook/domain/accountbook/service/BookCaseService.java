@@ -31,8 +31,7 @@ public class BookCaseService {
 	}
 
 	@Transactional
-	public BookCaseResponse register(BookCaseRegisterRequest bookCaseRegisterRequest) {
-		Long bookId = bookCaseRegisterRequest.bookId();
+	public BookCaseResponse register(Long bookId, BookCaseRegisterRequest bookCaseRegisterRequest) {
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> {
 			throw BookException.notFoundBookById(bookId);
 		});

@@ -7,8 +7,6 @@ import lombok.Builder;
 
 public record BookCaseRegisterRequest(
 	@NotNull
-	Long bookId,
-	@NotNull
 	Long income,
 	@NotNull
 	Long outcome,

@@ -2,7 +2,7 @@
 
 === 조회
 
-operation::get-book[snippets='http-request,request-headers,http-response,response-headers,response-body,response-fields']
+operation::get-book[snippets='http-request,path-parameters,request-headers,http-response,response-headers,response-body,response-fields']
 '''
 
 === 등록

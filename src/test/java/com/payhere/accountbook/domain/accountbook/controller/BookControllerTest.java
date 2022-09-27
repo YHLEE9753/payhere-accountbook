@@ -46,7 +46,6 @@ class BookControllerTest extends ControllerTestConfig {
 			.andExpectAll(status().isOk(),
 				content().contentType(MediaType.APPLICATION_JSON),
 				content().json(objectMapper.writeValueAsString(bookResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				pathParameters(
 					parameterWithName("bookId").description("요청할 가계부(일) 아이디")
@@ -91,7 +90,6 @@ class BookControllerTest extends ControllerTestConfig {
 		resultActions
 			.andExpectAll(status().isOk(),
 				content().json(objectMapper.writeValueAsString(bookResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				requestHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
@@ -134,7 +132,6 @@ class BookControllerTest extends ControllerTestConfig {
 		resultActions
 			.andExpectAll(status().isOk(),
 				content().json(objectMapper.writeValueAsString(bookResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				requestHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")

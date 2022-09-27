@@ -33,7 +33,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	BookCaseService bookCaseService;
 
 	@Test
-	@DisplayName("/api/v1/bookcase/{bookCaseId} 에서 가계부(단건)을 조회한다.")
+	@DisplayName("/api/v1/book/{bookId}/bookcase/{bookCaseId} 에서 가계부(단건)을 조회한다.")
 	void getBookCase() throws Exception {
 		// given
 		BookCaseResponse bookCaseResponse = getBookCaseResponse();
@@ -41,7 +41,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 
 		// when
 		ResultActions resultActions = mockMvc.perform(
-			get("/api/v1/bookcase/{bookCaseId}", 1)
+			get("/api/v1/book/{bookId}/bookcase/{bookCaseId}", 1,1)
 				.contentType(MediaType.APPLICATION_JSON));
 
 		// then
@@ -49,9 +49,9 @@ class BookCaseControllerTest extends ControllerTestConfig {
 			.andExpectAll(status().isOk(),
 				content().contentType(MediaType.APPLICATION_JSON),
 				content().json(objectMapper.writeValueAsString(bookCaseResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디"),
 					parameterWithName("bookCaseId").description("요청할 가계부(단건) 아이디")
 				),
 				requestHeaders(
@@ -70,22 +70,21 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	}
 
 	@Test
-	@DisplayName("/api/v1/bookcase 에서 가계부(일)을 생성한다")
+	@DisplayName("/api/v1/book/{bookId}/bookcase 에서 가계부(일)을 생성한다")
 	void postBookCase() throws Exception {
 		// given
 		BookCaseRegisterRequest bookCaseRegisterRequest = BookCaseRegisterRequest.builder()
-			.bookId(1L)
 			.income(10000L)
 			.outcome(5000L)
 			.title("one coffee")
 			.place("mega coffee")
 			.build();
 		BookCaseResponse bookCaseResponse = getBookCaseResponse();
-		given(bookCaseService.register(any())).willReturn(bookCaseResponse);
+		given(bookCaseService.register(any(), any())).willReturn(bookCaseResponse);
 
 		// when
 		ResultActions resultActions = mockMvc.perform(
-			post("/api/v1/bookcase")
+			post("/api/v1/book/{bookId}/bookcase",1)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(bookCaseRegisterRequest)));
 
@@ -93,13 +92,14 @@ class BookCaseControllerTest extends ControllerTestConfig {
 		resultActions
 			.andExpectAll(status().isOk(),
 				content().json(objectMapper.writeValueAsString(bookCaseResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				requestHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
 				),
+				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디")
+				),
 				requestFields(
-					fieldWithPath("bookId").type(NUMBER).description("가계부(일일) 아이디"),
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
 					fieldWithPath("title").type(STRING).description("제목"),
@@ -122,7 +122,6 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	void patchBookCase() throws Exception {
 		// given
 		BookCaseUpdateRequest bookCaseUpdateRequest = BookCaseUpdateRequest.builder()
-			.bookId(1L)
 			.id(1L)
 			.income(10000L)
 			.outcome(5000L)
@@ -134,7 +133,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 
 		// when
 		ResultActions resultActions = mockMvc.perform(
-			patch("/api/v1/bookcase")
+			patch("/api/v1/book/{bookId}/bookcase",1)
 				.content(objectMapper.writeValueAsString(bookCaseUpdateRequest))
 				.contentType(MediaType.APPLICATION_JSON));
 
@@ -142,13 +141,14 @@ class BookCaseControllerTest extends ControllerTestConfig {
 		resultActions
 			.andExpectAll(status().isOk(),
 				content().json(objectMapper.writeValueAsString(bookCaseResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				requestHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
 				),
+				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디")
+				),
 				requestFields(
-					fieldWithPath("bookId").type(NUMBER).description("가계부(일일) 아이디"),
 					fieldWithPath("id").type(NUMBER).description("가계부(단건) 아이디"),
 					fieldWithPath("income").type(NUMBER).description("단건 수입"),
 					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
@@ -171,13 +171,13 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	@DisplayName("/api/v1/bookcase 에서 가계부(단건)을 삭제한다")
 	void deleteBookCase() throws Exception {
 		// given
-		BookCaseDeleteRequest bookCaseDeleteRequest = new BookCaseDeleteRequest(1L,1L);
+		BookCaseDeleteRequest bookCaseDeleteRequest = new BookCaseDeleteRequest(1L);
 		BookCaseResponse bookCaseResponse = getBookCaseResponse();
 		given(bookCaseService.delete(any())).willReturn(bookCaseResponse);
 
 		// when
 		ResultActions resultActions = mockMvc.perform(
-			delete("/api/v1/bookcase")
+			delete("/api/v1/book/{bookId}/bookcase",1)
 				.content(objectMapper.writeValueAsString(bookCaseDeleteRequest))
 				.contentType(MediaType.APPLICATION_JSON));
 
@@ -185,13 +185,14 @@ class BookCaseControllerTest extends ControllerTestConfig {
 		resultActions
 			.andExpectAll(status().isOk(),
 				content().json(objectMapper.writeValueAsString(bookCaseResponse)))
-			.andDo(print())
 			.andDo(document(COMMON_DOCS_NAME,
 				requestHeaders(
 					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
 				),
+				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디")
+				),
 				requestFields(
-					fieldWithPath("bookId").type(NUMBER).description("가계부(일일) 아이디"),
 					fieldWithPath("id").type(NUMBER).description("가계부(단건) 아이디")
 				),
 				responseHeaders(

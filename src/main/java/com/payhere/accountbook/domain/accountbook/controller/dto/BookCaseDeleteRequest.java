@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 public record BookCaseDeleteRequest(
 	@NotNull
-	Long bookId,
-	@NotNull
 	Long id
 ) {
 }

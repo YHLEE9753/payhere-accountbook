@@ -1,4 +1,4 @@
-name: accountbook-1.0.0
+name: accountbook-1.0.1
 on:
   workflow_dispatch:
     inputs:
