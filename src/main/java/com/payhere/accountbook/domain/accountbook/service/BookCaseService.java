@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseDeleteRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseRegisterRequest;
+import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseReviveRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.model.Book;
 import com.payhere.accountbook.domain.accountbook.model.BookCase;
@@ -82,6 +83,32 @@ public class BookCaseService {
 		Book book = bookCase.getBook();
 		book.changeIncomeAndOutcome((-1) * bookCase.getIncome(), (-1) * bookCase.getOutcome());
 		bookCaseRepository.delete(bookCase);
+
+		return BookConverter.toBookCaseResponse(bookCase);
+	}
+
+	@Transactional(readOnly = true)
+	public BookCaseResponses findDeletedBookCases(Long bookId) {
+		Book book = bookRepository.findById(bookId).orElseThrow(() -> {
+			throw BookException.notFoundBookById(bookId);
+		});
+		List<BookCase> bookCases = bookCaseRepository.findByBookIsDeleted(book.getId());
+		List<BookCaseResponse> bookCaseResponses = new ArrayList<>();
+		for(BookCase bookCase : bookCases){
+			bookCaseResponses.add(BookConverter.toBookCaseResponse(bookCase));
+		}
+
+		return new BookCaseResponses(bookCaseResponses);
+	}
+
+	@Transactional
+	public BookCaseResponse revive(BookCaseReviveRequest bookCaseReviveRequest) {
+		Long bookCaseId = bookCaseReviveRequest.id();
+		BookCase bookCase = bookCaseRepository.findBookCaseByIdIgnoreWhere(bookCaseId).orElseThrow(() -> {
+			throw BookException.notFoundBookCaseById(bookCaseId);
+		});
+
+		bookCase.revive();
 
 		return BookConverter.toBookCaseResponse(bookCase);
 	}

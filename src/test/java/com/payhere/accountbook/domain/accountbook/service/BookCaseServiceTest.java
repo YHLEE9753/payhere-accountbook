@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseDeleteRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseRegisterRequest;
+import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseReviveRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.model.Book;
 import com.payhere.accountbook.domain.accountbook.model.BookCase;
@@ -39,6 +40,7 @@ class BookCaseServiceTest {
 	Member member;
 	Book book;
 	BookCase bookCase;
+	BookCase deletedBookCase;
 
 	@BeforeEach
 	void beforeEach() {
@@ -60,6 +62,16 @@ class BookCaseServiceTest {
 			.memo("memo")
 			.build()
 		);
+		deletedBookCase = bookCaseRepository.save(BookCase.builder()
+			.book(book)
+			.income(3000L)
+			.outcome(1500L)
+			.title("deleted")
+			.place("deleted")
+			.memo("deleted")
+			.build()
+		);
+		bookCaseRepository.delete(deletedBookCase);
 	}
 
 	@AfterEach
@@ -185,6 +197,49 @@ class BookCaseServiceTest {
 			() -> assertThat(softDeletedBookCase.getPlace()).isEqualTo("e-mart"),
 			() -> assertThat(softDeletedBookCase.getMemo()).isEqualTo("memo"),
 			() -> assertThat(softDeletedBookCase.isDelete()).isTrue()
+		);
+	}
+
+	@Test
+	@DisplayName("삭제된 가계부(단건)을 가계부(일일) id 로 전부 찾는다.")
+	void findDeletedBookCasesTest() {
+		// given
+		Long bookId = book.getId();
+
+		// when
+		List<BookCaseResponse> bookCases = bookCaseService.findDeletedBookCases(bookId).bookCases();
+		BookCaseResponse bookCaseResponse = bookCases.get(0);
+
+		// then
+		assertThat(bookCases.size()).isEqualTo(1);
+		assertAll(
+			() -> assertThat(bookCaseResponse.id()).isNotNull(),
+			() -> assertThat(bookCaseResponse.income()).isEqualTo(3000),
+			() -> assertThat(bookCaseResponse.outcome()).isEqualTo(1500),
+			() -> assertThat(bookCaseResponse.title()).isEqualTo("deleted"),
+			() -> assertThat(bookCaseResponse.place()).isEqualTo("deleted"),
+			() -> assertThat(bookCaseResponse.memo()).isEqualTo("deleted")
+		);
+	}
+
+	@Test
+	@DisplayName("삭제된 가계부(단건)을 복구한다")
+	void reviveDeletedBookCaseTest() {
+		// given
+		Long deletedBookCaseId = deletedBookCase.getId();
+		BookCaseReviveRequest bookCaseReviveRequest = new BookCaseReviveRequest(deletedBookCaseId);
+
+		// when
+		BookCaseResponse revivedBookCaseResponse = bookCaseService.revive(bookCaseReviveRequest);
+
+		// then
+		assertAll(
+			() -> assertThat(revivedBookCaseResponse.id()).isEqualTo(deletedBookCaseId),
+			() -> assertThat(revivedBookCaseResponse.income()).isEqualTo(3000),
+			() -> assertThat(revivedBookCaseResponse.outcome()).isEqualTo(1500),
+			() -> assertThat(revivedBookCaseResponse.title()).isEqualTo("deleted"),
+			() -> assertThat(revivedBookCaseResponse.place()).isEqualTo("deleted"),
+			() -> assertThat(revivedBookCaseResponse.memo()).isEqualTo("deleted")
 		);
 	}
 }

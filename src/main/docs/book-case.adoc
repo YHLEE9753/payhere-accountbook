@@ -24,3 +24,13 @@ operation::patch-book-case[snippets='http-request,path-parameters,request-header
 
 operation::delete-book-case[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-headers,response-body,response-fields']
 '''
+
+=== 삭제된 가계부(단건) 전체조회
+
+operation::get-deleted-book-cases[snippets='http-request,path-parameters,request-headers,http-response,response-headers,response-body,response-fields']
+'''
+
+=== 삭제된 가계부(단건) 복구
+
+operation::patch-deleted-book-case[snippets='http-request,path-parameters,request-headers,request-body,http-response,response-headers,response-body,response-fields']
+'''

@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.payhere.accountbook.config.ControllerTestConfig;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseDeleteRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseRegisterRequest;
+import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseReviveRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.service.BookCaseService;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
@@ -170,7 +171,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	}
 
 	@Test
-	@DisplayName("/api/v1/bookcase 에서 가계부(단건)을 수정한다")
+	@DisplayName("/api/v1/book/{bookId}/bookcase 에서 가계부(단건)을 수정한다")
 	void patchBookCase() throws Exception {
 		// given
 		BookCaseUpdateRequest bookCaseUpdateRequest = BookCaseUpdateRequest.builder()
@@ -223,7 +224,7 @@ class BookCaseControllerTest extends ControllerTestConfig {
 	}
 
 	@Test
-	@DisplayName("/api/v1/bookcase 에서 가계부(단건)을 삭제한다")
+	@DisplayName("/api/v1/book/{bookId}/bookcase 에서 가계부(단건)을 삭제한다")
 	void deleteBookCase() throws Exception {
 		// given
 		BookCaseDeleteRequest bookCaseDeleteRequest = new BookCaseDeleteRequest(1L);
@@ -234,6 +235,89 @@ class BookCaseControllerTest extends ControllerTestConfig {
 		ResultActions resultActions = mockMvc.perform(
 			delete("/api/v1/book/{bookId}/bookcase", 1)
 				.content(objectMapper.writeValueAsString(bookCaseDeleteRequest))
+				.contentType(MediaType.APPLICATION_JSON));
+
+		// then
+		resultActions
+			.andExpectAll(status().isOk(),
+				content().json(objectMapper.writeValueAsString(bookCaseResponse)))
+			.andDo(document(COMMON_DOCS_NAME,
+				requestHeaders(
+					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
+				),
+				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디")
+				),
+				requestFields(
+					fieldWithPath("id").type(NUMBER).description("가계부(단건) 아이디")
+				),
+				responseHeaders(
+					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
+				),
+				responseFields(
+					fieldWithPath("id").type(NUMBER).description("가계부(단건) 아이디"),
+					fieldWithPath("income").type(NUMBER).description("단건 수입"),
+					fieldWithPath("outcome").type(NUMBER).description("단건 지출"),
+					fieldWithPath("title").type(STRING).description("제목"),
+					fieldWithPath("place").type(STRING).description("장소"),
+					fieldWithPath("memo").type(STRING).description("메모")
+				)));
+	}
+
+	@Test
+	@DisplayName("/api/v1/book/{bookId}/bookcase/is-deleted 에서 삭제된 가계부(단건)을 전부 조회한다.")
+	void getDeletedBookCases() throws Exception {
+		// given
+		BookCaseResponse bookCaseResponse1 = getBookCaseResponse(1L);
+		BookCaseResponse bookCaseResponse2 = getBookCaseResponse(2L);
+		List<BookCaseResponse> bookCases = new ArrayList<>(List.of(bookCaseResponse1, bookCaseResponse2));
+		BookCaseResponses bookCaseResponses = new BookCaseResponses(bookCases);
+
+		given(bookCaseService.findDeletedBookCases(any())).willReturn(bookCaseResponses);
+
+		// when
+		ResultActions resultActions = mockMvc.perform(
+			get("/api/v1/book/{bookId}/bookcase/is-deleted", 1)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		// then
+		resultActions
+			.andExpectAll(status().isOk(),
+				content().contentType(MediaType.APPLICATION_JSON),
+				content().json(objectMapper.writeValueAsString(bookCaseResponses)))
+			.andDo(document(COMMON_DOCS_NAME,
+				pathParameters(
+					parameterWithName("bookId").description("요청할 가계부(일일) 아이디")
+				),
+				requestHeaders(
+					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
+				),
+				responseHeaders(
+					headerWithName(HttpHeaders.CONTENT_TYPE).description("json 으로 전달")
+				),
+				responseFields(
+					fieldWithPath("bookCases").type(ARRAY).description("가계부(단건) 아이디"),
+					fieldWithPath("bookCases.[].id").type(NUMBER).description("가계부(단건) 아이디"),
+					fieldWithPath("bookCases.[].income").type(NUMBER).description("단건 수입"),
+					fieldWithPath("bookCases.[].outcome").type(NUMBER).description("단건 지출"),
+					fieldWithPath("bookCases.[].title").type(STRING).description("제목"),
+					fieldWithPath("bookCases.[].place").type(STRING).description("장소"),
+					fieldWithPath("bookCases.[].memo").type(STRING).description("메모")
+				)));
+	}
+
+	@Test
+	@DisplayName("/api/v1/book/{bookId}//bookcase/is-deleted 에서 삭제된 가계부(단건)을 복구한다")
+	void patchDeletedBookCase() throws Exception {
+		// given
+		BookCaseReviveRequest bookCaseReviveRequest = new BookCaseReviveRequest(1L);
+		BookCaseResponse bookCaseResponse = getBookCaseResponse(1L);
+		given(bookCaseService.revive(any())).willReturn(bookCaseResponse);
+
+		// when
+		ResultActions resultActions = mockMvc.perform(
+			patch("/api/v1/book/{bookId}/bookcase/is-deleted", 1)
+				.content(objectMapper.writeValueAsString(bookCaseReviveRequest))
 				.contentType(MediaType.APPLICATION_JSON));
 
 		// then

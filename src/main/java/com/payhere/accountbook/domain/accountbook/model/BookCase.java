@@ -69,4 +69,8 @@ public class BookCase extends BaseEntity {
 		this.place = place;
 		this.memo = memo;
 	}
+
+	public void revive() {
+		this.isDelete = Boolean.FALSE;
+	}
 }

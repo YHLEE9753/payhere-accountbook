@@ -19,4 +19,7 @@ public interface BookCaseRepository extends JpaRepository<BookCase, Long> {
 	Optional<BookCase> findBookCaseByIdIgnoreWhere(@Param("bookCaseId") Long bookCaseId);
 
 	List<BookCase> findByBook(Book book);
+
+	@Query(value = "select * from book_case where book_id = :bookId and is_delete = true", nativeQuery = true)
+	List<BookCase> findByBookIsDeleted(@Param("bookId") Long bookId);
 }

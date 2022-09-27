@@ -1,6 +1,5 @@
 package com.payhere.accountbook.domain.accountbook.controller;
 
-
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseDeleteRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseRegisterRequest;
+import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseReviveRequest;
 import com.payhere.accountbook.domain.accountbook.controller.dto.BookCaseUpdateRequest;
 import com.payhere.accountbook.domain.accountbook.service.BookCaseService;
 import com.payhere.accountbook.domain.accountbook.service.dto.BookCaseResponse;
@@ -55,7 +55,7 @@ public class BookCaseController {
 		@PathVariable Long bookId,
 		@Valid @RequestBody BookCaseRegisterRequest bookCaseRegisterRequest
 	) {
-		BookCaseResponse bookCaseResponse = bookCaseService.register(bookId,bookCaseRegisterRequest);
+		BookCaseResponse bookCaseResponse = bookCaseService.register(bookId, bookCaseRegisterRequest);
 
 		return ResponseEntity
 			.ok()
@@ -78,6 +78,28 @@ public class BookCaseController {
 		@Valid @RequestBody BookCaseDeleteRequest bookCaseDeleteRequest
 	) {
 		BookCaseResponse bookCaseResponse = bookCaseService.delete(bookCaseDeleteRequest);
+
+		return ResponseEntity
+			.ok()
+			.body(bookCaseResponse);
+	}
+
+	@GetMapping("/{bookId}/bookcase/is-deleted")
+	public ResponseEntity<BookCaseResponses> deletedBookCases(
+		@PathVariable Long bookId
+	) {
+		BookCaseResponses bookCaseResponses = bookCaseService.findDeletedBookCases(bookId);
+
+		return ResponseEntity
+			.ok()
+			.body(bookCaseResponses);
+	}
+
+	@PatchMapping("/{bookId}/bookcase/is-deleted")
+	public ResponseEntity<BookCaseResponse> reviveBookCase(
+		@Valid @RequestBody BookCaseReviveRequest bookCaseReviveRequest
+	) {
+		BookCaseResponse bookCaseResponse = bookCaseService.revive(bookCaseReviveRequest);
 
 		return ResponseEntity
 			.ok()
