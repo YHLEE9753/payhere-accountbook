@@ -1,19 +1,39 @@
-spring:
+#spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
+#    url: jdbc:mysql://db:3306/accountbook?serverTimezone=Asia/Seoul
 #    username: admin
 #    password: 1234
-  jpa:
-    database: mysql
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#  jpa:
+#    database: mysql
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 #        show_sql: true
 #        format_sql: true
 #    defer-datasource-initialization: true
 #  sql:
 #    init:
 #      mode: always
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
+    username: admin
+    password: 1234
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        show_sql: true
+        format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

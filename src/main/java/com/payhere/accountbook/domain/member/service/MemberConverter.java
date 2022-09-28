@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberConverter {
-	public static Member toMember(MemberSignUpRequest memberSignUpRequest) {
-		return new Member(memberSignUpRequest.email(), memberSignUpRequest.password(), memberSignUpRequest.nickname());
+	public static Member toMember(MemberSignUpRequest memberSignUpRequest, String encodedPassword) {
+		return new Member(memberSignUpRequest.email(), encodedPassword, memberSignUpRequest.nickname());
 	}
 
 	public static MemberResponse toMemberResponse(Member member) {

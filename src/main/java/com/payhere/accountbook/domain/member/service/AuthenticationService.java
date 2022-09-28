@@ -1,5 +1,6 @@
 package com.payhere.accountbook.domain.member.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import com.payhere.accountbook.domain.member.controller.dto.MemberSignUpRequest;
 import com.payhere.accountbook.domain.member.model.Member;
 import com.payhere.accountbook.domain.member.repository.MemberRepository;
 import com.payhere.accountbook.domain.member.service.dto.MemberResponse;
+import com.payhere.accountbook.domain.member.util.MemberUtil;
 import com.payhere.accountbook.global.error.exception.MemberException;
 import com.payhere.accountbook.global.security.token.Tokens;
 
@@ -17,12 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationService {
 	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
 	public MemberResponse signupMember(MemberSignUpRequest memberSignUpRequest) {
 		checkDuplicatedEmail(memberSignUpRequest.email());
 		checkDuplicatedNickName(memberSignUpRequest.nickname());
-		Member member = memberRepository.save(MemberConverter.toMember(memberSignUpRequest));
+		MemberUtil.passwordValidation(memberSignUpRequest.password());
+		Member member = memberRepository.save(
+			MemberConverter.toMember(memberSignUpRequest, passwordEncoder.encode(memberSignUpRequest.password())));
 
 		return MemberConverter.toMemberResponse(member);
 	}
@@ -33,7 +38,10 @@ public class AuthenticationService {
 		Member member = memberRepository.findByEmail(email).orElseThrow(() -> {
 			throw MemberException.notFoundMemberByEmail(email);
 		});
-		member.checkPassword(memberLoginRequest.password());
+		MemberUtil.passwordValidation(memberLoginRequest.password());
+		if(!passwordEncoder.matches(memberLoginRequest.password(), member.getPassword())){
+			throw MemberException.invalidPassword();
+		}
 
 		return MemberConverter.toMemberResponse(member);
 	}

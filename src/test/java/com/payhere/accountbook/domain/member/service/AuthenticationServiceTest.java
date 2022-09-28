@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.payhere.accountbook.domain.member.controller.dto.MemberLoginRequest;
 import com.payhere.accountbook.domain.member.controller.dto.MemberSignUpRequest;
@@ -28,13 +29,15 @@ class AuthenticationServiceTest {
 	MemberRepository memberRepository;
 	@Autowired
 	AuthenticationService authenticationService;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	Member member1;
 
 	@BeforeEach
 	void beforeEach() {
-		member1 = new Member("test123@google.com", "qwer1234", "whale123");
-		Member member2 = new Member("test456@google.com", "qwer1234", "dolphin123");
+		member1 = new Member("test123@google.com", passwordEncoder.encode("qwer1234"), "whale123");
+		Member member2 = new Member("test456@google.com", passwordEncoder.encode("qwer1234"), "dolphin123");
 		memberRepository.save(member1);
 		memberRepository.save(member2);
 	}
@@ -109,7 +112,7 @@ class AuthenticationServiceTest {
 	@DisplayName("잘못된 비밀번호로 로그인에 실패한다.")
 	void invalidPasswordTest() {
 		// given
-		MemberLoginRequest memberLoginRequest = new MemberLoginRequest("test123@google.com", "invalid");
+		MemberLoginRequest memberLoginRequest = new MemberLoginRequest("test123@google.com", "invalid1");
 
 		// when // then
 		assertThatThrownBy(() -> authenticationService.login(memberLoginRequest))

@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.payhere.accountbook.domain.member.util.MemberUtil;
-import com.payhere.accountbook.global.error.exception.MemberException;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,14 +20,14 @@ import lombok.NoArgsConstructor;
 public class Member {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "member_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 
 	@Column(name = "email", length = 320, unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 16, nullable = false)
+	@Column(name = "password", length = 60, nullable = false)
 	private String password;
 
 	@Column(name = "nickname", length = 16, unique = true, nullable = false)
@@ -46,7 +45,6 @@ public class Member {
 
 	public Member(String email, String password, String nickname) {
 		MemberUtil.emailValidation(email);
-		MemberUtil.passwordValidation(password);
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
@@ -60,11 +58,5 @@ public class Member {
 	public void updateTokens(String accessToken, String refreshToken){
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
-	}
-
-	public void checkPassword(String password) {
-		if(!this.password.equals(password)){
-			throw MemberException.invalidPassword();
-		}
 	}
 }
