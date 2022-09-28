@@ -19,22 +19,27 @@
 
 ### 인증 인가
 - Spring Security 와 JWT(AccessToken, RefreshToken)을 활용하였습니다.
-- accessToken 은 클라이언트 local storage 에 저장하고 refreshtoken 은 MySQL 에 Member entity 에 저장됩니다(만료된 accesstoken 값을 확인하기 위해 accesstoken 값도 같이 저장됩니다.)
-- 최초 회원가입 시 AccessToken 을 클라이언트에 전달하고 클라이언트는 해당 토큰을 local storage 에 저장한 후 request header 에 Authorization - Bearer {accessTokenValue} 를 담아서 요청을 해야 합니다.
-- "/","/api/v1/signup", "api/v1/login", "api/v1/logout" 해당 경로는 permitall 로 권한을 열어두었으며 "/api/v1/book/**","/api/v1/bookcase/**","/api/v1/memo/**" 경로는 토큰값을 헤더에 담지 않으면 denied 되며 exceptionHandling 를 통해 "/" 경로로 redirect 됩니다.
+- accessToken 은 클라이언트 local storage 에 저장하고 refreshtoken 은 MySQL 에 Member entity 에 저장됩니다
+  - (만료된 accesstoken 값을 확인하기 위해 accesstoken 값도 같이 저장됩니다.)
+- 최초 회원가입 시 AccessToken 을 클라이언트에 전달하고 클라이언트는 해당 토큰을 local storage 에 저장한 후 request Authorization 헤더에 Bearer {accessTokenValue} 를 담아서 요청을 해야 합니다.
+- `"/"`,`"/api/v1/signup"`, `"api/v1/login"`, `"api/v1/logout"` 해당 경로는 permitall 로 권한을 열어두었으며 `"/api/v1/book/**"`,`"/api/v1/bookcase/**"`,`"/api/v1/memo/**"` 경로는 토큰값을 헤더에 담지 않으면 denied 되며 exceptionHandling 를 통해 `"/"` 경로로 redirect 됩니다.
 - filter 를 통해 토큰 만료시 분기처리합니다.
-  - 1.accessToken, RefreshToken 모두 유효한 경우 - 정상처리			
-  - 2.accessToken 은 유효하지만, refreshToken 이 만료 -> accessToken 을 검증하여 refreshToken 재발급(T002 에러 발생 - 클라이언트는 해당 예외를 받으면 재요청합니다.)
-  - 3.accessToken 만료, refreshToken 유효 -> refreshToken 을 검증하여 accessToken 재발급(재발급된 AccessToken 값과 함께 T001 에러 발생 - 클라이언트는 재발급된 AccessToken 값으로 재요청합니다.)
-  - 4.accessToken 과 refreshToken 모두 만료 - 에러발생(재로그인이 필요합니다.)
+  - 1.accessToken, RefreshToken 모두 유효한 경우 
+    - 정상처리			
+  - 2.accessToken 은 유효하지만, refreshToken 이 만료 
+    - accessToken 을 검증하여 refreshToken 재발급(T002 에러 발생 - 클라이언트는 해당 예외를 받으면 재요청합니다.)
+  - 3.accessToken 만료, refreshToken 유효 
+    - refreshToken 을 검증하여 accessToken 재발급(재발급된 AccessToken 값과 함께 T001 에러 발생 - 클라이언트는 재발급된 AccessToken 값으로 재요청합니다.)
+  - 4.accessToken 과 refreshToken 모두 만료 
+    - 에러발생(재로그인이 필요합니다.)
 
 ### 도메인
 - Member 1:* Book 1:* BookCase
 - Member : 멤버 도메인
 - Book : 하루 가계부
-  - 해당 일자로 BookCase 가 여러개 들어갈 수 있다, BookCase 가 추가될때 자동으로 Book 의 income 과 outcome 이 변경된다.
+  - 해당 일자로 BookCase 가 여러개 들어갈 수 있다, BookCase 가 추가될때 자동으로 Book 의 income 과 outcome 이 변경됩니다.
 - BookCase : 1건에 해당하는 가계부
-  - (예) 2022년 9월 28일에 해당하는 Book 에 커피한잔을 구매한 BookCase 가 추가된다.
+  - (예) 2022년 9월 28일에 해당하는 Book 에 커피한잔을 구매한 BookCase 가 추가됩니다.
 
 ### API
 - 멤버인증
@@ -81,3 +86,11 @@ public interface BookCaseRepository extends JpaRepository<BookCase, Long> {
 }
 
 ```
+
+### 추가 개발사항
+- 비밀번호 저장시 Bcrypt 를 활용한 PasswordEncoder 로 encode 되어 저장됩니다.
+- Book, BookCase 엔티티에 `createdAt`, `updatedAt`,`createdBy`,`updatedBy`가 추가됩니다.
+  - `createdBy` 와 `updatedBy` 에는 Member의 id 값이 담깁니다.
+- controller 는 단위테스트로 service 는 통합테스트로 진행하였습니다
+- 테스트 커버리지
+![img.png](img.png)
