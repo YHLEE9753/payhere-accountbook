@@ -41,10 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		String accessToken = tokenService.resolveToken(request);
-		boolean isLogout = request.getServletPath().equals("/api/v1/logout");
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		if (!isLogout && isAccessTokenValid(accessToken)) {
+		if (isAccessTokenValid(accessToken)) {
 			// 1. accessToken, RefreshToken 모두 유효한 경우 - 정상처리
 			Long memberId = Long.parseLong(tokenService.getUid(accessToken));
 			String[] roles = tokenService.getRole(accessToken);
@@ -67,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			setAuthenticationToSecurityContextHolder(memberId, roles);
 			filterChain.doFilter(request, response);
 			return;
-		} else if (!isLogout && accessToken != null) {
+		} else if (accessToken != null) {
 			// 3. accessToken 만료, refreshToken 유효 -> refreshToken 을 검증하여 accessToken 재발급
 			Member member = memberRepository.findByAccessTokenValue(accessToken).orElseThrow(() -> {
 				throw MemberException.notFoundMemberByAccessToken(accessToken);
@@ -77,7 +76,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			if (isRefreshTokenValid(refreshTokenValue)) {
 				String[] roles = tokenService.getRole(refreshTokenValue);
 				String accessTokenValue = tokenService.generateAccessToken(String.valueOf(member.getId()), roles);
-
 				accessTokenExpirationException(response, objectMapper, CoderUtil.encode(accessTokenValue));
 				return;
 			}
