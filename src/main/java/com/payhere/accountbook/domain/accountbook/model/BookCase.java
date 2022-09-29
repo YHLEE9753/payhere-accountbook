@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Where(clause = "is_delete = false")
 public class BookCase extends BaseEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_case_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 

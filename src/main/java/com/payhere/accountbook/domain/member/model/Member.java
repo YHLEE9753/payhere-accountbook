@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Member {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id", unique = true, nullable = false, updatable = false)
 	private Long id;
 
