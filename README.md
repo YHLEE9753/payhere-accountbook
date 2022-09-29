@@ -1,7 +1,7 @@
 # payhere-accountbook
 ## 실행방법
 1. [구글드라이브](https://drive.google.com/drive/folders/11nl_p-KfaZ_MoOgBteQo-aWzSKplNccm?usp=sharing)에 접속한 후 `docker-compose.yml` 를 다운로드한다.
-2. 다운로드 디렉토리에서 cmd 접속 후 `docker-compose up -d` 명령어를 실행한다.(20초 정도 지나면 실행이 됩니다)
+2. 다운로드 디렉토리에서 cmd 접속 후 `docker-compose up -d` 명령어를 실행한다.
 3. MySQL 포트 설정 : `3306`, Spring 포트 설정 : `8080` - 해당 포트를 사용중이라면 정지후 재실행한다.
 4. `http://localhost:8080` 에 접속 시 REST DOCS 문서를 확인할 수 있다.
 5. REST DOCS 문서를 통해 API 테스트 진행할 수 있습니다(POST MAN)
