@@ -42,20 +42,21 @@
   - (예) 2022년 9월 28일에 해당하는 Book 에 커피한잔을 구매한 BookCase 가 추가됩니다.
 
 ### API
-- 멤버인증
+- 멤버인증<br>
+(회원가입, 로그인, 로그아웃 url 은 permitAll 설정되어있지만 로그아웃 할 시 token 값을 헤더에 담아주어야 정상 로그아웃처리가 진행됩니다.)
   - 회원가입 : POST /api/v1/signup
   - 로그인 : POST /api/v1/login
   - 로그아웃 : POST /api/v1/logout
 
-- 가계부(일) - Book
-- (Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
+- 가계부(일) - Book<br>
+(Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
   - 단건조회 : GET /api/v1/book/{bookId}
   - 전체조회 : GET /api/v1/book
   - 등록 : POST /api/v1/book
   - 수정 : PATCH /api/v1/book
 
-- 가계부(단건) - BookCase
-- (Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
+- 가계부(단건) - BookCase<br>
+(Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
   - 단건조회 : GET /api/v1/book/{bookId}/bookcase/{bookCaseId}
   - 전체조회 : GET /api/v1/book/{bookId}/bookcase
   - 등록 : POST /api/v1/book/{bookId}/bookcase
