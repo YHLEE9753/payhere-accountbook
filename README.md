@@ -48,12 +48,14 @@
   - 로그아웃 : POST /api/v1/logout
 
 - 가계부(일) - Book
+- (Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
   - 단건조회 : GET /api/v1/book/{bookId}
   - 전체조회 : GET /api/v1/book
   - 등록 : POST /api/v1/book
   - 수정 : PATCH /api/v1/book
 
 - 가계부(단건) - BookCase
+- (Authorization header 에 `Bearer {accesstoken value}` 를 담지 않으면 access denied 됩니다.)
   - 단건조회 : GET /api/v1/book/{bookId}/bookcase/{bookCaseId}
   - 전체조회 : GET /api/v1/book/{bookId}/bookcase
   - 등록 : POST /api/v1/book/{bookId}/bookcase
@@ -93,4 +95,5 @@ public interface BookCaseRepository extends JpaRepository<BookCase, Long> {
   - `createdBy` 와 `updatedBy` 에는 Member의 id 값이 담깁니다.
 - controller 는 단위테스트로 service 는 통합테스트로 진행하였습니다
 - 테스트 커버리지
+
 ![img.png](img.png)

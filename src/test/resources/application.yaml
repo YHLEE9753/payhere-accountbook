@@ -2,16 +2,20 @@ spring:
   profiles:
     include: common
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/accountbook?serverTimezone=Asia/Seoul
-    username: admin
-    password: 1234
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
   jpa:
-    database: mysql
+    database: h2
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        auto_quote_keyword: true
+        dialect: org.hibernate.dialect.H2Dialect
         show_sql: true
         format_sql: true
