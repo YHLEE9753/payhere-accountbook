@@ -42,7 +42,7 @@ public class WebSecurityConfig {
 			)
 			.authorizeRequests(
 				authorizeRequests -> authorizeRequests
-					.antMatchers("/","/api/v1/signup", "api/v1/login", "api/v1/logout")
+					.antMatchers("/","/api/v1/signup", "/api/v1/login", "/api/v1/logout")
 					.permitAll()
 					.antMatchers("/api/v1/book/**","/api/v1/bookcase/**","/api/v1/memo/**")
 					.hasRole("MEMBER")
