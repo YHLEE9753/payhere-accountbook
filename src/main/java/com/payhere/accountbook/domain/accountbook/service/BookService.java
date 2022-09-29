@@ -66,7 +66,6 @@ public class BookService {
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> {
 			throw BookException.notFoundBookById(bookId);
 		});
-
 		book.changeTitleAndMemo(bookUpdateRequest.title(), bookUpdateRequest.memo());
 
 		return BookConverter.toBookResponse(book);

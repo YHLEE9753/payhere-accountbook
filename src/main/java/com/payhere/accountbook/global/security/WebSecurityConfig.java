@@ -1,6 +1,5 @@
 package com.payhere.accountbook.global.security;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,9 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
 	private final TokenService tokenService;
 	private final MemberRepository memberRepository;
-
-	@Value("${app.domain}")
-	private String domain;
 
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {

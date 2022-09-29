@@ -52,7 +52,7 @@ public class Book extends BaseEntity {
 	private String memo;
 
 	@Column(name = "is_delete")
-	private boolean isDelete;
+	private boolean isDelete = Boolean.FALSE;
 
 	@Builder
 	public Book(Member member, Long year, Long month, Long day, String title, String memo) {
@@ -64,7 +64,6 @@ public class Book extends BaseEntity {
 		this.outcome = 0L;
 		this.title = title;
 		this.memo = memo;
-		this.isDelete = false;
 	}
 
 	public void changeTitleAndMemo(String title, String memo){

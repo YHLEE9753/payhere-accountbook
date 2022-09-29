@@ -67,7 +67,6 @@ public class BookCaseService {
 		BookCase bookCase = bookCaseRepository.findById(bookCaseId).orElseThrow(() -> {
 			throw BookException.notFoundBookCaseById(bookCaseId);
 		});
-
 		bookCase.change(bookCaseUpdateRequest.income(), bookCaseUpdateRequest.outcome(), bookCaseUpdateRequest.title(),
 			bookCaseUpdateRequest.place(), bookCaseUpdateRequest.memo());
 
@@ -107,7 +106,6 @@ public class BookCaseService {
 		BookCase bookCase = bookCaseRepository.findBookCaseByIdIgnoreWhere(bookCaseId).orElseThrow(() -> {
 			throw BookException.notFoundBookCaseById(bookCaseId);
 		});
-
 		bookCase.revive();
 
 		return BookConverter.toBookCaseResponse(bookCase);

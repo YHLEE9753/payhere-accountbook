@@ -23,7 +23,6 @@ import com.payhere.accountbook.global.error.exception.MemberException;
 import com.payhere.accountbook.global.security.token.Tokens;
 
 @SpringBootTest
-@Transactional
 class AuthenticationServiceTest {
 	@Autowired
 	MemberRepository memberRepository;
